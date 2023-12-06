@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace Project.Domain.Entities
 {
-    public class Author : IBaseEntitiy
+    public class Comment : IBaseEntity
     {
-        public DateTime CreatedDate { get ; set ; }
-        public DateTime? UpdatedDate { get ; set ; }
-        public DateTime? DeletedDate { get ; set ; }
-        public Status Status { get ; set ; }
+        public int Id { get; set; }
+        public string Content { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public Status Status { get; set; }
+
+        public Guid AppUserId { get; set; } 
+        public AppUser AppUser { get; set; }
+
+        public int PostId { get; set; }
+        public Post Post { get; set; }
     }
 }

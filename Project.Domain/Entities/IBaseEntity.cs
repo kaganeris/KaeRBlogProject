@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project.Domain.Entities
 {
-    public interface IBaseEntitiy
+    public interface IBaseEntity
     {
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }

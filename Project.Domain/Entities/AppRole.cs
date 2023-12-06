@@ -1,4 +1,5 @@
-﻿using Project.Domain.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using Project.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Project.Domain.Entities
 {
-    public class Author : IBaseEntitiy
+    public class AppRole : IdentityRole<Guid>,IBaseEntity
     {
         public DateTime CreatedDate { get ; set ; }
         public DateTime? UpdatedDate { get ; set ; }
