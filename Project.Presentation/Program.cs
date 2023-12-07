@@ -1,5 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Project.Application.IoC;
 using Project.Domain.Entities;
 using Project.Infrastructure.Context;
 using Project.Presentation.Models.SeedData;
@@ -17,6 +20,12 @@ namespace Project.Presentation
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultCon")));
+
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+            {
+                builder.RegisterModule(new DependencyResolver()); // Kendi oluþturduðumuz Resolver Class'ýn instance'ýný alýyoruz.
+            });
 
             builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 

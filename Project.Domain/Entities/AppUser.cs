@@ -17,13 +17,13 @@ namespace Project.Domain.Entities
             Comments = new List<Comment>();
             Likes = new List<Like>();
         }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
 
         [NotMapped]
         public string FullName => FirstName + LastName;
-        public DateTime BirthDate { get; set; }
-        public Gender Gender { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public Gender? Gender { get; set; }
         public string ImagePath { get; set; }
 
         [NotMapped] // DB'de yer almayacak
