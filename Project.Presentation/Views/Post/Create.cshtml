@@ -1,0 +1,99 @@
+﻿@using Project.Application.Models.DTOs.PostDTOs;
+
+@{
+    Layout = null;
+}
+@model CreatePostDTO
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Post</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/loginTemplate/css/style.css">
+    
+    <style>
+        /* Özel CSS stil tanımları */
+        .img {
+            height: 100vh; /* Ekran yüksekliği kadar kapla */
+            background-size: cover; /* Resmi tamamen kapla */
+            background-position: center; /* Resmi ortala */
+        }
+    </style>
+</head>
+<body class="img js-fullheight">
+    <div class="container-fluid h-100" style="background-image: url('/images/postPhotos/postShare.jpg');">
+        <div class="row h-100">
+            <div class="col-lg-6 d-flex align-items-center">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 text-center mb-5">
+                        <h2 class="heading-section">Makale Yaz</h2>
+                        <div class="login-wrap p-0">
+                            <form asp-action="Create" asp-controller="Post" method="post" class="signin-form" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <input asp-for="UploadPath" type="file" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Title" type="text" class="form-control" placeholder="Makale Başlığı" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea asp-for="Content" id="summernote" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <select asp-for="GenreId" class="form-select">
+                                        @foreach (var genre in Model.Genres)
+                                        {
+                                            <option value="@genre.Id">@genre.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="form-control btn btn-primary submit px-3" value="Yayınla" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <img class="img-fluid h-100" src="~/images/postphotos/post.jpeg" />
+            </div>
+        </div>
+    </div>
+
+    <script src="~/loginTemplate/js/jquery.min.js"></script>
+    <script src="~/loginTemplate/js/popper.js"></script>
+    <script src="~/loginTemplate/js/bootstrap.min.js"></script>
+    <script src="~/loginTemplate/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $('#summernote').summernote({
+            placeholder: 'Makale İçeriği',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            callbacks: {
+                onInit: function () {
+                    $('.note-editable').css('color', 'white'); // Set the text color to white
+                }
+            }
+        });
+    </script>
+</body>
+</html>

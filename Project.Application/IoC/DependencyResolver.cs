@@ -30,8 +30,9 @@ namespace Project.Application.IoC
 
 
             builder.RegisterType<AppUserManager>().As<IAppUserService>().InstancePerLifetimeScope();
-            //builder.RegisterType<GenreManager>().As<IGenreService>().InstancePerLifetimeScope();
-            //builder.RegisterType<AuthorManager>().As<IAuthorService>().InstancePerLifetimeScope();
+            builder.RegisterType<GenreManager>().As<IGenreService>().InstancePerLifetimeScope();
+            builder.RegisterType<PostManager>().As<IPostService>().InstancePerLifetimeScope();
+            builder.RegisterType<AuthorManager>().As<IAuthorService>().InstancePerLifetimeScope();
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>

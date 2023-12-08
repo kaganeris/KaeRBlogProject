@@ -34,7 +34,7 @@
                         <form asp-action="ConfirmMail" asp-controller="User" method="post" class="signin-form">
                             <div class="form-group">
                                 <h2>Mail Adresiniz: @ViewBag.Email</h2>
-                                <input asp-for="Email" type="hidden" class="form-control" placeholder="Email" required>
+                                <input asp-for="Email" type="hidden" class="form-control" value="@ViewBag.Email" placeholder="Email" required>
                             </div>
                             <div class="form-group">
                                 <input asp-for="ConfirmCode" type="number" class="form-control" placeholder="Onay Kodu" required>
