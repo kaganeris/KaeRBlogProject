@@ -33,6 +33,7 @@ namespace Project.Application.IoC
             builder.RegisterType<GenreManager>().As<IGenreService>().InstancePerLifetimeScope();
             builder.RegisterType<PostManager>().As<IPostService>().InstancePerLifetimeScope();
             builder.RegisterType<AuthorManager>().As<IAuthorService>().InstancePerLifetimeScope();
+            builder.RegisterType<CommentManager>().As<ICommentService>().InstancePerLifetimeScope();
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>

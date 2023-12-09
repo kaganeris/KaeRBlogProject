@@ -1,0 +1,18 @@
+﻿@using Project.Application.Models.DTOs.PostDTOs;
+@model List<PostHeroDTO>
+
+@foreach (var item in Model)
+{
+    <div class="swiper-slide">
+        <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@item.PostId" class="img-bg d-flex align-items-end" style="background-image: url('@item.ImagePath');">
+            <div class="img-bg-inner">
+                <h2>@item.Title</h2>
+                <div class="h-25">
+                    @Html.Raw(item.Content)
+                </div>
+            </div>
+        </a>
+    </div>
+}
+
+

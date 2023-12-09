@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Project.Application.Models.DTOs.AppUserDTOs;
 using Project.Application.Models.DTOs.AuthorDTOs;
+using Project.Application.Models.DTOs.CommentDTOs;
 using Project.Application.Models.DTOs.GenreDTOs;
 using Project.Application.Models.DTOs.PostDTOs;
 using Project.Application.Models.VMs.AuthorVMs;
@@ -38,6 +39,10 @@ namespace Project.Application.AutoMapper
             //CreateMap<Post, PostVM>().ReverseMap();
             //CreateMap<Post, GetPostVM>().ReverseMap();
             CreateMap<Post, PostDetailVM>().ReverseMap();
+
+
+            CreateMap<Comment, CreateCommentDTO>().ReverseMap();
+            CreateMap<Comment, UpdateCommentDTO>().ReverseMap();
         }
     }
 }

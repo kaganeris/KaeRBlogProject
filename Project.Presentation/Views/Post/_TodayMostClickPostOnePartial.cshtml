@@ -1,0 +1,47 @@
+﻿@using Project.Application.Models.VMs.PostVMs;
+
+@model PostGridVM
+<style>
+    .green-color {
+        color: green;
+    }
+
+    .red-color {
+        color: red;
+    }
+</style>
+<a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model.PostId">
+    <img src="@Model.ImagePath" alt="" class="img-fluid">
+</a>
+<div class="post-meta">
+    <span class="date">@Model.GenreName</span>
+    <span class="mx-1">&bullet;</span>
+    <span>@Model.CreatedDate.ToShortDateString()</span>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span class="mx-1">&bullet;</span>
+        @if (Model.IsLiked)
+        {
+            <i class="fa fa-thumbs-up green-color" onclick="LikePost(this)"></i>
+        }
+        else
+        {
+            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this)"></i>
+        }
+    }
+
+
+</div>
+<h2><a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model.PostId">@Model.Title</a></h2>
+<p class="mb-4 d-block">
+    <div>
+        @Html.Raw(Model.Content)
+    </div>
+</p>
+
+<div class="d-flex align-items-center author">
+    <div class="photo"><img src="@Model.AuthorPhoto" alt="" class="img-fluid"></div>
+    <div class="name">
+        <h3 class="m-0 p-0">@Model.AuthorFullName</h3>
+    </div>
+</div>

@@ -7,21 +7,17 @@ using System.Threading.Tasks;
 
 namespace Project.Domain.Entities
 {
-    public class Comment : IBaseEntity
+    public class Reply: IBaseEntity
     {
         public int Id { get; set; }
         public string Content { get; set; }
+        public Guid AppUserId { get; set; }
+        public int CommentId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }
-
-        public Guid AppUserId { get; set; } 
         public AppUser AppUser { get; set; }
-
-        public int PostId { get; set; }
-        public Post Post { get; set; }
-
-        public List<Reply> Replies { get; set; }
+        public Comment Comment { get; set; }
     }
 }

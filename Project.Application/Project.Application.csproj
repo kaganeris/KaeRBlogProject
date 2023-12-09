@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="AutoMapper\" />
-    <Folder Include="Models\DTOs\CommentDTOs\" />
     <Folder Include="Models\DTOs\LikeDTOs\" />
   </ItemGroup>
 

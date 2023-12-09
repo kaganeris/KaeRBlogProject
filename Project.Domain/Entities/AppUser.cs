@@ -21,7 +21,7 @@ namespace Project.Domain.Entities
         public string? LastName { get; set; }
 
         [NotMapped]
-        public string FullName => FirstName + LastName;
+        public string FullName => FirstName + " " + LastName;
         public DateTime? BirthDate { get; set; }
         public Gender? Gender { get; set; }
         public string ImagePath { get; set; }
@@ -36,6 +36,7 @@ namespace Project.Domain.Entities
 
         // Navigation Prop
         public List<Comment> Comments { get; set; }
+        public List<Reply> Replies { get; set; }
         public List<Like> Likes { get; set; }
         public Author? Author { get; set; }
     }

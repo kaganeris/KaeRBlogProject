@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Project.Application.Models.DTOs.AuthorDTOs;
+using Project.Application.Models.DTOs.CommentDTOs;
 using Project.Application.Models.DTOs.PostDTOs;
 using Project.Application.Models.VMs.PostVMs;
 using Project.Application.Services.Abstract;
@@ -32,7 +35,7 @@ namespace Project.Application.Services.Concrete
             {
                 using var image = Image.Load(createPostDTO.UploadPath.OpenReadStream());
 
-                image.Mutate(x => x.Resize(300, 300)); // Görsel ile ilgili işlemler Mutate() içerisinde yapılabilir. Boyutlandırma, kırpma vs.
+                //image.Mutate(x => x.Resize(300, 300)); // Görsel ile ilgili işlemler Mutate() içerisinde yapılabilir. Boyutlandırma, kırpma vs.
 
                 Guid guid = Guid.NewGuid(); // Resmin ismini unique oluşturacağız.
 
@@ -63,9 +66,49 @@ namespace Project.Application.Services.Concrete
             }
         }
 
-        public Task<List<PostDetailVM>> GetDetailPostList()
+        public async Task<PostDetailVM> GetDetailPost(int postid,Guid userId)
         {
-            throw new NotImplementedException();
+            PostDetailVM postDetailVM = await postRepository.GetFilteredFirstOrDefault(
+                select: x => new PostDetailVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    GenreName = x.Genre.Name,
+                    ClickCount = x.ClickCount,
+                    LikeCount = x.Likes.Count,
+                    IsLiked = x.Likes.Any(x => x.AppUserId == userId),
+                    Comments = x.Comments.Select(x => new CommentDTO
+                    {
+                        Content = x.Content,
+                        AppUserFullName = x.AppUser.FullName,
+                        CreatedDate = x.CreatedDate
+                    }).ToList(),
+                },
+                where: x => x.Id == postid,
+                include: x => x.Include(x => x.Genre).Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Comments)
+                );
+
+            return postDetailVM;
+        }
+
+        public async Task<List<PostHeroDTO>> GetHeroPosts()
+        {
+            List<PostHeroDTO> postHeroDTOs = await postRepository.GetFilteredList(
+                select: x => new PostHeroDTO
+                {
+                    PostId= x.Id,
+                    Title = x.Title,
+                    ImagePath = x.ImagePath,
+                    Content = x.Content.Substring(0, 100)
+                },
+                where: x => x.Status == Domain.Enums.Status.Active || x.Status == Domain.Enums.Status.Modified,
+                orderBy: x => x.OrderByDescending(x => x.ClickCount)
+                );
+            postHeroDTOs = postHeroDTOs.Take(4).ToList();
+            return postHeroDTOs;
         }
 
         public async Task<UpdatePostDTO> GetPostById(int id)
@@ -78,6 +121,35 @@ namespace Project.Application.Services.Concrete
                 UpdatePostDTO updatePostDTO = mapper.Map<UpdatePostDTO>(post);
                 return updatePostDTO;
             }
+        }
+
+        public async Task<PostGridVM> GetPostGridVM(string genreName,Guid userId)
+        {
+            PostGridVM postGridVM = await postRepository.GetFilteredFirstOrDefault(
+                select: x => new PostGridVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                    IsLiked = x.Likes.Any(x => x.AppUserId == userId),
+                },
+                where: x => x.Genre.Name.ToLower() == genreName.ToLower(),
+                orderBy: x => x.OrderByDescending(x => x.ClickCount),
+                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+                );
+            return postGridVM;
+        }
+
+        public async Task IncreaseClickCount(int id)
+        {
+            Post post = await postRepository.GetDefault(x => x.Id == id);
+            post.ClickCount++;
+            await postRepository.Update(post);
         }
 
         public async Task<bool> UpdatePost(UpdatePostDTO updatePostDTO)

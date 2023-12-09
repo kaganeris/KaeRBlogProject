@@ -20,6 +20,7 @@ namespace Project.Infrastructure.Context
 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Reply> Replies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -36,7 +37,7 @@ namespace Project.Infrastructure.Context
             builder.ApplyConfiguration(new GenreConfig());
             builder.ApplyConfiguration(new LikeConfig());
             builder.ApplyConfiguration(new PostConfig());
-            builder.ApplyConfiguration(new PostConfig());
+            builder.ApplyConfiguration(new ReplyConfig());
 
             base.OnModelCreating(builder);
         }

@@ -10,11 +10,17 @@ namespace Project.Application.Services.Abstract
 {
     public interface IPostService
     {
-        Task<List<PostDetailVM>> GetDetailPostList();
+        Task<PostDetailVM> GetDetailPost(int postId,Guid userId);
         Task<UpdatePostDTO> GetPostById(int id);
 
         Task<bool> CreatePost(CreatePostDTO createPostDTO);
         Task<bool> UpdatePost(UpdatePostDTO updatePostDTO);
         Task<bool> DeletePost(int id);
+
+        Task<List<PostHeroDTO>> GetHeroPosts();
+
+        Task<PostGridVM> GetPostGridVM(string genreName,Guid userId);
+
+        Task IncreaseClickCount(int id);
     }
 }
