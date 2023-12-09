@@ -27,6 +27,7 @@ namespace Project.Application.IoC
             builder.RegisterType<GenreRepository>().As<IGenreRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CommentRepository>().As<ICommentRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LikeRepository>().As<ILikeRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ReplyRepository>().As<IReplyRepository>().InstancePerLifetimeScope();
 
 
             builder.RegisterType<AppUserManager>().As<IAppUserService>().InstancePerLifetimeScope();
@@ -34,6 +35,7 @@ namespace Project.Application.IoC
             builder.RegisterType<PostManager>().As<IPostService>().InstancePerLifetimeScope();
             builder.RegisterType<AuthorManager>().As<IAuthorService>().InstancePerLifetimeScope();
             builder.RegisterType<CommentManager>().As<ICommentService>().InstancePerLifetimeScope();
+            builder.RegisterType<ReplyManager>().As<IReplyService>().InstancePerLifetimeScope();
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>

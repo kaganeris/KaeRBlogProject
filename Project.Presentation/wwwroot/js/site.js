@@ -9,6 +9,10 @@ window.onload = function () {
     getGridPostOne("Siyaset")
     getGridPostOne("Dünya")
     getGridPostOne("Donanım")
+    $('.reply-btn').click(function () {
+        // Tıklanan "Yanıtla" düğmesine sahip olan yanıtın formunu göster/gizle
+        $(this).closest('.comment').find('.reply-form').toggle();
+    });
 };
 
 function getHeroPosts() {
@@ -79,6 +83,22 @@ function CreateComment(postId) {
         success: function (response) {
             $('#comments').append(response);
             $('#content').val("")
+        }
+    })
+}
+
+function CreateReply(commentId) {
+    let commentData = {
+        content: $('#replyContent').val(),
+        commentId: commentId
+    }
+    $.ajax({
+        url: "/Reply/Create",
+        type: "POST",
+        data: commentData,
+        success: function (response) {
+            $('#replies').append(response);
+            $('#replyContent').val("")
         }
     })
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Project.Application.Models.DTOs.AuthorDTOs;
 using Project.Application.Models.DTOs.CommentDTOs;
 using Project.Application.Models.DTOs.PostDTOs;
+using Project.Application.Models.DTOs.ReplyDTOs;
 using Project.Application.Models.VMs.PostVMs;
 using Project.Application.Services.Abstract;
 using Project.Domain.Entities;
@@ -82,9 +83,17 @@ namespace Project.Application.Services.Concrete
                     IsLiked = x.Likes.Any(x => x.AppUserId == userId),
                     Comments = x.Comments.Select(x => new CommentDTO
                     {
+                        CommentId = x.Id,
                         Content = x.Content,
                         AppUserFullName = x.AppUser.FullName,
-                        CreatedDate = x.CreatedDate
+                        CreatedDate = x.CreatedDate,
+                        Replies = x.Replies.Select(x => new ReplyDTO
+                        {
+                            Content = x.Content,
+                            AppUserImagePath = x.AppUser.ImagePath,
+                            AppUserFullName = x.AppUser.FullName,
+                            CreatedDate = x.CreatedDate
+                        }).ToList(),
                     }).ToList(),
                 },
                 where: x => x.Id == postid,

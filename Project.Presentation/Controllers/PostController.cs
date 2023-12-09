@@ -98,8 +98,6 @@ namespace Project.Presentation.Controllers
 
                 }
             }
-
-
         }
 
         [HttpGet]
