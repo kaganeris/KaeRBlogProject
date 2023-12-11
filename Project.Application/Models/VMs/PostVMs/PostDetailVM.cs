@@ -12,6 +12,7 @@ namespace Project.Application.Models.VMs.PostVMs
     public class PostDetailVM
     {
         public int PostId { get; set; }
+        public Guid AppUserId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string ImagePath { get; set; }

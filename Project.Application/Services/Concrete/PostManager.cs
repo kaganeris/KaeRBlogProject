@@ -73,6 +73,7 @@ namespace Project.Application.Services.Concrete
                 select: x => new PostDetailVM
                 {
                     PostId = x.Id,
+                    AppUserId = x.Author.AppUserId,
                     Title = x.Title,
                     Content = x.Content,
                     ImagePath = x.ImagePath,

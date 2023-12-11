@@ -102,3 +102,50 @@ function CreateReply(commentId) {
         }
     })
 }
+document.getElementById("openPopup").addEventListener("click", function () {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("popup").style.display = "block";
+});
+
+// Popup kapatma fonksiyonu
+document.getElementById("closePopup").addEventListener("click", function () {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+});
+
+
+function UpdatePostPopup(id) {
+    $.ajax({
+        url: "/Post/Update",
+        type: "GET",
+        data: { 'id': id },
+        success: function (response) {
+            $("#popup").html('<span class="close" id="closePopup">&times;</span>' + response);
+
+            $(document).on("click", "#closePopup", function () {
+                $("#overlay").hide(); // Örtüyü gizle
+                $("#popup").hide(); // Popup'ı gizle
+            });
+        }
+    });
+}
+
+function UpdatePost(postId) {
+    let postData = {
+        content: $('#summernote').val(),
+        title: $('#title').val(),
+        genreId: $('#genreId').val(),
+        imagePath: $('#imagePath').val(),
+        id: postId
+    }
+    $.ajax({
+        url: "/Post/Update",
+        type: "POST",
+        data: postData,
+        success: function (response) {
+            if (response === "Ok") {
+                window.location.reload();
+            }
+        }
+    })
+}

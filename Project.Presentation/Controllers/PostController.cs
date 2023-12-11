@@ -50,6 +50,39 @@ namespace Project.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Author,Admin")]
+        public async Task<IActionResult> Update(int id)
+        {
+            UpdatePostDTO updatePostDTO = await postService.GetPostById(id);
+            updatePostDTO.Genres = await genreService.GetGenreList();
+            return PartialView("_PostUpdatePopup",updatePostDTO);
+
+        }
+        [HttpPost]
+        [Authorize(Roles = "Author,Admin")]
+        public async Task<IActionResult> Update(UpdatePostDTO updatePostDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = await postService.UpdatePost(updatePostDTO);
+                if (result)
+                {
+                    return Json("Ok");
+                }
+                else
+                {
+                    return Json("Hata");
+                }
+            }
+            else
+            {
+                return Json("Hata");
+            }
+
+        }
+
+
+        [HttpGet]
         public async Task<IActionResult> GetHeroPosts()
         {
             List<PostHeroDTO> postHeros = await postService.GetHeroPosts();

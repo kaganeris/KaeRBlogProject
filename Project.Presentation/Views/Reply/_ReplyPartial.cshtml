@@ -4,13 +4,13 @@
 <div class="reply d-flex mb-4">
     <div class="flex-shrink-0">
         <div class="avatar avatar-sm rounded-circle">
-            <img class="avatar-img" src="assets/img/person-4.jpg" alt="" class="img-fluid">
+            <img class="avatar-img" src="~/mainTemplate/assets/img/person-4.jpg" alt="" class="img-fluid">
         </div>
     </div>
     <div class="flex-grow-1 ms-2 ms-sm-3">
         <div class="reply-meta d-flex align-items-baseline">
             <h6 class="mb-0 me-2">@Model.AppUserFullName</h6>
-            <span class="text-muted">@DateTime.Compare(DateTime.Now,Model.CreatedDate)g</span>
+            <span class="text-muted">@DateTime.Compare(DateTime.Now,Model.CreatedDate)sn</span>
         </div>
         <div class="reply-body">
             @Model.Content

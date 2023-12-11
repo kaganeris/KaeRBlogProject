@@ -1,0 +1,57 @@
+﻿@using Project.Application.Models.DTOs.PostDTOs;
+@model UpdatePostDTO
+
+
+
+<div class="form-group">
+    <input type="file" class="form-control" id="imagePath" required>
+</div>
+<br />
+<div class="form-group">
+    <input asp-for="Title" type="text" class="form-control" placeholder="Makale Başlığı" id="title" required>
+</div>
+<br />
+<div class="form-group">
+    <textarea asp-for="Content" id="summernote" class="form-control"></textarea>
+</div>
+<br />
+<div class="form-group">
+    <select asp-for="GenreID" id="genreId" class="form-select">
+        @foreach (var item in Model.Genres)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
+</div>
+<br />
+<div class="form-group">
+    <input type="submit" class="form-control btn btn-primary submit px-3" onclick="UpdatePost(@Model.Id)" value="Güncelle" />
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Diğer JavaScript dosyaları (Popper.js, Bootstrap.js, vb.) -->
+<!-- Summernote -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<!-- Summernote Initialize -->
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    });
+</script>

@@ -1,7 +1,13 @@
-﻿@using Project.Application.Models.VMs.PostVMs;
+﻿@using Microsoft.AspNetCore.Identity;
+@using Project.Application.Models.VMs.PostVMs;
+@using Project.Domain.Entities;
 
 @{
     ViewData["Title"] = "SinglePost";
+}
+@inject UserManager<AppUser> userManager
+@{
+    AppUser appUser = await userManager.GetUserAsync(User);
 }
 
 @model PostDetailVM
@@ -12,6 +18,56 @@
 
     .red-color {
         color: red;
+    }
+
+    /* Overlay */
+    .overlay {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9998;
+    }
+
+    /* Popup görünümü */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 20px;
+        z-index: 9999;
+    }
+
+    /* Popup içeriği */
+    .popup-content {
+        text-align: center;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 120px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
     }
 </style>
 <section class="single-post-content">
@@ -51,6 +107,36 @@
                             {
                                 <i class="fa fa-thumbs-down red-color" onclick="LikePost(this)"></i>
                             }
+                            @if(Model.AppUserId == appUser.Id)
+                            {
+                                <div class="dropdown d-inline-block ml-auto">
+                                    <button class="btn btn-reply dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-gear-fill"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <a class="dropdown-item" id="openPopup" onclick="UpdatePostPopup(@Model.PostId)">
+                                                <i class="bi bi-pencil-fill"></i> Düzenle
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item">
+                                                <i class="bi bi-trash-fill"></i> Sil
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="overlay" id="overlay"></div>
+                                <!-- Popup içeriği buraya gelecek -->
+                                <div>
+                                    <div class="popup" id="popup">
+                                        <span class="close" id="closePopup">&times;</span>
+                                        @* partialdan gelecek*@
+                                    </div>
+                                </div>
+                            }
+                           
                         }
                     </div>
                     <img src="@Model.ImagePath" alt="" class="img-fluid">
@@ -75,29 +161,61 @@
                                 <div class="flex-grow-1 ms-2 ms-sm-3">
                                     <div class="comment-meta d-flex align-items-baseline">
                                         <h6 class="me-2">@item.AppUserFullName</h6>
-                                        <span class="text-muted">@DateTime.Compare(DateTime.Now,item.CreatedDate)g</span>
+                                        <span class="text-muted">
+                                            @{
+                                                TimeSpan difference = DateTime.Now - item.CreatedDate;
+                                                int sayi = 0;
+                                                string harf = "";
+                                                if (difference.TotalDays >= 7)
+                                                {
+                                                    int weeks = (int)(difference.TotalDays / 7);
+                                                    sayi = weeks;
+                                                    harf = "h";
+
+                                                }
+                                                else if (difference.TotalDays >= 1)
+                                                {
+                                                    sayi = (int)difference.TotalDays;
+                                                    harf = "g";
+                                                }
+                                                else if (difference.TotalHours >= 1)
+                                                {
+                                                    sayi = (int)difference.TotalHours;
+                                                    harf = "s";
+                                                }
+                                                else
+                                                {
+                                                    sayi = (int)difference.TotalMinutes;
+                                                    harf = "dk";
+                                                }
+                                            }
+                                            @sayi@harf
+                                        </span>
                                     </div>
                                     <div class="comment-body">
                                         @item.Content
                                     </div>
-                                    <a class="btn reply-btn">
-                                        <span class="text-muted">Yanıtla</span>
-                                        <i class="bi bi-reply-fill"></i>
-                                    </a>
-                                    <div class="reply-form" style="display: none;">
-                                        <div class="row justify-content-center mt-3">
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-12 mb-3">
-                                                        <textarea class="form-control" id="replyContent-@item.CommentId" placeholder="Yanıt İçeriği" cols="10" rows="3"></textarea>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <input type="submit" class="btn btn-primary" onclick="CreateReply(@item.CommentId)" value="Yanıtla">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="btn reply-btn">
+                                            <span class="text-muted">Yanıtla</span>
+                                            <i class="bi bi-reply-fill"></i>
+                                        </a>
+                                        <div class="reply-form" style="display: none;">
+                                            <div class="row justify-content-center mt-3">
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-12 mb-3">
+                                                            <textarea class="form-control" id="replyContent-@item.CommentId" placeholder="Yanıt İçeriği" cols="10" rows="3"></textarea>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <input type="submit" class="btn btn-primary" onclick="CreateReply(@item.CommentId)" value="Yanıtla">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                     @*Reply kısmı *@
                                     <div class="comment-replies bg-light p-3 mt-3 rounded">
                                         <h6 class="comment-replies-title mb-4 text-muted text-uppercase">@item.Replies.Count Yanıt</h6>
@@ -114,7 +232,36 @@
                                                     <div class="flex-grow-1 ms-2 ms-sm-3">
                                                         <div class="reply-meta d-flex align-items-baseline">
                                                             <h6 class="mb-0 me-2">@reply.AppUserFullName</h6>
-                                                            <span class="text-muted">@DateTime.Compare(DateTime.Now,reply.CreatedDate)g</span>
+                                                            <span class="text-muted">
+                                                                @{
+                                                                    TimeSpan differenceRep = DateTime.Now - reply.CreatedDate;
+                                                                    int sayiRep = 0;
+                                                                    string harfRep = "";
+                                                                    if (difference.TotalDays >= 7)
+                                                                    {
+                                                                        int weeks = (int)(differenceRep.TotalDays / 7);
+                                                                        sayiRep = weeks;
+                                                                        harfRep = "h";
+
+                                                                    }
+                                                                    else if (differenceRep.TotalDays >= 1)
+                                                                    {
+                                                                        sayiRep = (int)differenceRep.TotalDays;
+                                                                        harfRep = "g";
+                                                                    }
+                                                                    else if (differenceRep.TotalHours >= 1)
+                                                                    {
+                                                                        sayiRep = (int)differenceRep.TotalHours;
+                                                                        harfRep = "s";
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        sayiRep = (int)differenceRep.TotalMinutes;
+                                                                        harfRep = "dk";
+                                                                    }
+                                                                }
+                                                                @sayiRep@harfRep
+                                                            </span>
                                                         </div>
                                                         <div class="reply-body">
                                                             @reply.Content

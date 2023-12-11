@@ -16,19 +16,13 @@ namespace Project.Application.Models.DTOs.PostDTOs
     public class UpdatePostDTO
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Başlık boş geçilemez!")]
-        public string Title { get; set; }
-
-        [Required(ErrorMessage = "İçerik boş geçilemez!")]
-        public string Content { get; set; }
-        public string ImagePath { get; set; }
+        public string? Title { get; set; }
+        public string? Content { get; set; }
+        public string? ImagePath { get; set; }
 
         [PictureFileExtension]
-        public IFormFile UploadPath { get; set; }
-        public int AuthorID { get; set; }
+        public IFormFile? UploadPath { get; set; }
         public int GenreID { get; set; }
-        public List<AuthorVM>? Authors { get; set; }
         public List<GenreVM>? Genres { get; set; }
     }
 }

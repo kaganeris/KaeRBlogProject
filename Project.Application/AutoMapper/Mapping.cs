@@ -36,7 +36,11 @@ namespace Project.Application.AutoMapper
 
 
             CreateMap<Post, CreatePostDTO>().ReverseMap();
-            CreateMap<Post, UpdatePostDTO>().ReverseMap();
+            CreateMap<Post, UpdatePostDTO>().ReverseMap()
+                .ForMember(dest => dest.Title, opt => opt.Condition(src => src.Title != null))
+                .ForMember(dest => dest.Content, opt => opt.Condition(src => src.Content != null))
+                .ForMember(dest => dest.ImagePath, opt => opt.Condition(src => src.ImagePath != null));
+
             //CreateMap<Post, PostVM>().ReverseMap();
             //CreateMap<Post, GetPostVM>().ReverseMap();
             CreateMap<Post, PostDetailVM>().ReverseMap();
