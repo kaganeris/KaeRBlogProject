@@ -97,7 +97,7 @@ namespace Project.Application.Services.Concrete
                     }).ToList(),
                 },
                 where: x => x.Id == postid,
-                include: x => x.Include(x => x.Genre).Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Comments)
+                include: x => x.Include(x => x.Genre).Include(x => x.Author).ThenInclude(x => x.AppUser).Include(x => x.Comments)
                 );
 
             return postDetailVM;

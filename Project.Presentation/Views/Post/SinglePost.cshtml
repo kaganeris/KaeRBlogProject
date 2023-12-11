@@ -89,7 +89,7 @@
                                             <div class="col-lg-12">
                                                 <div class="row">
                                                     <div class="col-12 mb-3">
-                                                        <textarea class="form-control" id="replyContent" placeholder="Yanıt İçeriği" cols="10" rows="3"></textarea>
+                                                        <textarea class="form-control" id="replyContent-@item.CommentId" placeholder="Yanıt İçeriği" cols="10" rows="3"></textarea>
                                                     </div>
                                                     <div class="col-12">
                                                         <input type="submit" class="btn btn-primary" onclick="CreateReply(@item.CommentId)" value="Yanıtla">
@@ -101,7 +101,8 @@
                                     @*Reply kısmı *@
                                     <div class="comment-replies bg-light p-3 mt-3 rounded">
                                         <h6 class="comment-replies-title mb-4 text-muted text-uppercase">@item.Replies.Count Yanıt</h6>
-                                        <div id="replies">
+
+                                        <div id="replies-@item.CommentId">
                                             @foreach (var reply in item.Replies)
                                             {
                                                 <div class="reply d-flex mb-4">

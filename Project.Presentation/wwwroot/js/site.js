@@ -89,7 +89,7 @@ function CreateComment(postId) {
 
 function CreateReply(commentId) {
     let commentData = {
-        content: $('#replyContent').val(),
+        content: $(`#replyContent-${commentId}`).val(),
         commentId: commentId
     }
     $.ajax({
@@ -97,8 +97,8 @@ function CreateReply(commentId) {
         type: "POST",
         data: commentData,
         success: function (response) {
-            $('#replies').append(response);
-            $('#replyContent').val("")
+            $(`#replies-${commentId}`).append(response);
+            $(`#replyContent-${commentId}`).val("")
         }
     })
 }
