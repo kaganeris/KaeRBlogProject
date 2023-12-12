@@ -149,3 +149,49 @@ function UpdatePost(postId) {
         }
     })
 }
+
+function DeletePost(id) {
+    $.ajax({
+        url: "/Post/Delete",
+        type: "GET",
+        data: { 'id': id },
+        success: function (response) {
+            if (response === "Ok") {
+                setTimeout(function () {
+                    window.location.href = "/"; // Replace with your homepage URL
+                }, 2000); // 2 seconds delay
+
+                // Show success notification
+                showSuccessNotification();
+            }
+        }
+    });
+}
+
+function showSuccessNotification() {
+    // Create a popup or notification element
+    var notification = document.createElement("div");
+    notification.className = "success-notification";
+    notification.textContent = "Başarıyla silindi";
+
+    // Add styles to the notification
+    notification.style.position = "fixed";
+    notification.style.top = "20px";
+    notification.style.left = "50%";
+    notification.style.transform = "translateX(-50%)";
+    notification.style.padding = "10px 20px";
+    notification.style.background = "#4CAF50";
+    notification.style.color = "#FFF";
+    notification.style.borderRadius = "5px";
+    notification.style.zIndex = "9999";
+    notification.style.width = "100%";
+    notification.style.textAlign = "center";
+
+    // Append the notification to the body
+    document.body.appendChild(notification);
+
+    // Remove the notification after 2 seconds
+    setTimeout(function () {
+        document.body.removeChild(notification);
+    }, 2000);
+}

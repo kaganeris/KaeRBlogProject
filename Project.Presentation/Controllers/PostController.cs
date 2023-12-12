@@ -81,6 +81,18 @@ namespace Project.Presentation.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool result = await postService.DeletePost(id);
+            if (result)
+            {
+                return Json("Ok");
+            }
+            else
+                return Json("Hata");
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> GetHeroPosts()

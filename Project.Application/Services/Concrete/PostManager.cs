@@ -97,7 +97,7 @@ namespace Project.Application.Services.Concrete
                         }).ToList(),
                     }).ToList(),
                 },
-                where: x => x.Id == postid,
+                where: x => x.Id == postid && x.Status != Domain.Enums.Status.Passive,
                 include: x => x.Include(x => x.Genre).Include(x => x.Author).ThenInclude(x => x.AppUser).Include(x => x.Comments)
                 );
 
@@ -148,7 +148,7 @@ namespace Project.Application.Services.Concrete
                     GenreName = x.Genre.Name,
                     IsLiked = x.Likes.Any(x => x.AppUserId == userId),
                 },
-                where: x => x.Genre.Name.ToLower() == genreName.ToLower(),
+                where: x => x.Genre.Name.ToLower() == genreName.ToLower() && x.Status != Domain.Enums.Status.Passive,
                 orderBy: x => x.OrderByDescending(x => x.ClickCount),
                 include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
                 );
