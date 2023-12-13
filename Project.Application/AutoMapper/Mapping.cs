@@ -3,6 +3,7 @@ using Project.Application.Models.DTOs.AppUserDTOs;
 using Project.Application.Models.DTOs.AuthorDTOs;
 using Project.Application.Models.DTOs.CommentDTOs;
 using Project.Application.Models.DTOs.GenreDTOs;
+using Project.Application.Models.DTOs.LikeDTOs;
 using Project.Application.Models.DTOs.PostDTOs;
 using Project.Application.Models.DTOs.ReplyDTOs;
 using Project.Application.Models.VMs.AuthorVMs;
@@ -51,6 +52,9 @@ namespace Project.Application.AutoMapper
 
             CreateMap<Reply, CreateReplyDTO>().ReverseMap();
             CreateMap<Reply, UpdateReplyDTO>().ReverseMap();
+
+            CreateMap<Like, CreateLikeDTO>().ReverseMap();
+            CreateMap<Like, UpdateLikeDTO>().ReverseMap();
         }
     }
 }

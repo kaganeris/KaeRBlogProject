@@ -1,13 +1,17 @@
-﻿@using Project.Application.Models.VMs.PostVMs;
+﻿@using Microsoft.AspNetCore.Identity;
+@using Project.Application.Models.VMs.PostVMs;
+@using Project.Domain.Entities;
 
 @model PostGridVM
 
+
 <style>
-    .green-color{
-        color:green;
+    .green-color {
+        color: green;
     }
-    .red-color{
-        color:red;
+
+    .red-color {
+        color: red;
     }
 </style>
 <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model.PostId">
@@ -23,14 +27,15 @@
         <span class="mx-1">&bullet;</span>
         @if (Model.IsLiked)
         {
-            <i class="fa fa-thumbs-up green-color" onclick="LikePost(this)"></i>
+            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model.PostId)"></i>
+
         }
         else
         {
-            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this)"></i>
+            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model.PostId)"></i>
         }
     }
-    
+
 </div>
 <h2>
     <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model.PostId">@Model.Title</a>

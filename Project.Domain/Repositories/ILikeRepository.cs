@@ -9,6 +9,6 @@ namespace Project.Domain.Repositories
 {
     public interface ILikeRepository : IBaseRepository<Like>
     {
-
+        Task<bool> HardDelete(Like entity);
     }
 }

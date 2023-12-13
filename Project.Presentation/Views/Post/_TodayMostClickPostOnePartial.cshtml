@@ -22,11 +22,11 @@
         <span class="mx-1">&bullet;</span>
         @if (Model.IsLiked)
         {
-            <i class="fa fa-thumbs-up green-color" onclick="LikePost(this)"></i>
+            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model.PostId)"></i>
         }
         else
         {
-            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this)"></i>
+            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model.PostId)"></i>
         }
     }
 

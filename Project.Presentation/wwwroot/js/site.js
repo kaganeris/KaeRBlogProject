@@ -64,11 +64,40 @@ function getGridPostOne(genreName) {
     })
 }
 
-function LikePost(x) {
-    x.classList.toggle("fa-thumbs-down");
-    x.classList.toggle("red-color");
-    x.classList.toggle("fa-thumbs-up");
-    x.classList.toggle("green-color");
+function LikePost(x, postId) {
+    let likeData = {
+        postId: postId
+    }
+    $.ajax({
+        url: "/Like/Create",
+        type: "POST",
+        data: likeData,
+        success: function (response) {
+            if (response === "Ok") {
+                x.classList.remove("fa-thumbs-down", "red-color");
+                x.classList.add("fa-thumbs-up", "green-color");
+                x.onclick = function () { UnlikePost(x, postId); };
+            }
+        }
+    })
+}
+
+function UnlikePost(x, postId) {
+    let likeData = {
+        postId: postId
+    }
+    $.ajax({
+        url: "/Like/Delete",
+        type: "POST",
+        data: likeData,
+        success: function (response) {
+            if (response === "Ok") {
+                x.classList.remove("fa-thumbs-up", "green-color");
+                x.classList.add("fa-thumbs-down", "red-color");
+                x.onclick = function () { LikePost(x, postId); };
+            }
+        }
+    })
 }
 
 function CreateComment(postId) {
