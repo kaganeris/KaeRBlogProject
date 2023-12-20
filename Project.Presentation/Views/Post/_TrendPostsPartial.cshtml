@@ -1,0 +1,44 @@
+﻿@using Project.Application.Models.VMs.PostVMs;
+
+@model List<PostGridVM>
+
+<div class="trending">
+    <h3>Trendler</h3>
+    <ul class="trending-post">
+        <li>
+            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[0].PostId">
+                <span class="number">1</span>
+                <h3>@Model[0].Title</h3>
+                <span class="author">@Model[0].AuthorFullName</span>
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[1].PostId">
+                <span class="number">2</span>
+                <h3>@Model[1].Title</h3>
+                <span class="author">@Model[1].AuthorFullName</span>
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[2].PostId">
+                <span class="number">3</span>
+                <h3>@Model[2].Title</h3>
+                <span class="author">@Model[2].AuthorFullName</span>
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[3].PostId">
+                <span class="number">4</span>
+                <h3>@Model[3].Title</h3>
+                <span class="author">@Model[3].AuthorFullName</span>
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[4].PostId">
+                <span class="number">5</span>
+                <h3>@Model[4].Title</h3>
+                <span class="author">@Model[4].AuthorFullName</span>
+            </a>
+        </li>
+    </ul>
+</div>

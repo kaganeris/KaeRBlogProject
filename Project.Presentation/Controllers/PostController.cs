@@ -55,7 +55,7 @@ namespace Project.Presentation.Controllers
         {
             UpdatePostDTO updatePostDTO = await postService.GetPostById(id);
             updatePostDTO.Genres = await genreService.GetGenreList();
-            return PartialView("_PostUpdatePopup",updatePostDTO);
+            return PartialView("_PostUpdatePopup", updatePostDTO);
 
         }
         [HttpPost]
@@ -149,9 +149,9 @@ namespace Project.Presentation.Controllers
         public async Task<IActionResult> SinglePost(int postID)
         {
             var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if(userIDClaim  == null)
+            if (userIDClaim == null)
             {
-                PostDetailVM postDetailVM = await postService.GetDetailPost(postID,Guid.NewGuid());
+                PostDetailVM postDetailVM = await postService.GetDetailPost(postID, Guid.NewGuid());
                 await postService.IncreaseClickCount(postID);
                 return View(postDetailVM);
             }
@@ -169,7 +169,73 @@ namespace Project.Presentation.Controllers
                     await postService.IncreaseClickCount(postID);
                     return View(postDetailVM);
                 }
-            }  
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FirstSectionPosts(string genreName)
+        {
+            var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIDClaim == null)
+            {
+                List<PostGridVM> postGridVM = await postService.GetSectionPosts(genreName, Guid.NewGuid());
+                return PartialView("_FirstSectionPartial", postGridVM);
+            }
+            else
+            {
+                string userID = userIDClaim.Value;
+                List<PostGridVM> postGridVM = await postService.GetSectionPosts(genreName, Guid.Parse(userID));
+                return PartialView("_FirstSectionPartial", postGridVM);
+
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SecondSectionPosts(string genreName)
+        {
+            var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIDClaim == null)
+            {
+                List<PostGridVM> postGridVM = await postService.GetSectionPosts(genreName, Guid.NewGuid());
+                return PartialView("_SecondSectionPartial", postGridVM);
+            }
+            else
+            {
+                string userID = userIDClaim.Value;
+                List<PostGridVM> postGridVM = await postService.GetSectionPosts(genreName, Guid.Parse(userID));
+                return PartialView("_SecondSectionPartial", postGridVM);
+
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ThirdSectionPosts(string genreName)
+        {
+            var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIDClaim == null)
+            {
+                List<PostGridVM> postGridVM = await postService.GetSectionPosts(genreName, Guid.NewGuid());
+                return PartialView("_ThirdSectionPartial", postGridVM);
+            }
+            else
+            {
+                string userID = userIDClaim.Value;
+                List<PostGridVM> postGridVM = await postService.GetSectionPosts(genreName, Guid.Parse(userID));
+                return PartialView("_ThirdSectionPartial", postGridVM);
+
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTrendPosts()
+        {
+            List<PostGridVM> postGridVM = await postService.GetTrendingPosts();
+
+            return PartialView("_TrendPostsPartial", postGridVM);
+
         }
     }
 }

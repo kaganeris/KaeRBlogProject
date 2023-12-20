@@ -1,0 +1,329 @@
+﻿@using Project.Application.Models.VMs.PostVMs;
+
+@model List<PostGridVM>
+
+
+<div class="container" data-aos="fade-up">
+
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Yazılım</h2>
+        <div><a href="category.html" class="more">Daha fazlası</a></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9">
+
+            <div class="d-lg-flex post-entry-2">
+                <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[0].PostId" class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block">
+                    <img src="@Model[0].ImagePath" alt="" class="img-fluid">
+                </a>
+                <div>
+                    <div class="post-meta">
+                        <span class="date">@Model[0].GenreName</span>
+                        <span class="mx-1">&bullet;</span>
+                        <span>@Model[0].CreatedDate.ToShortDateString()</span>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span class="mx-1">&bullet;</span>
+                            @if (Model[0].IsLiked)
+                            {
+                                <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[0].PostId)"></i>
+
+                            }
+                            else
+                            {
+                                <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[0].PostId)"></i>
+                            }
+                        }
+                    </div>
+                    <h3>
+                        <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[0].PostId">
+                            @Model[0].Title
+                        </a>
+                    </h3>
+                    <p>
+                        <div>
+                            @Html.Raw(Model[0].Content)
+                        </div>
+                    </p>
+                    <div class="d-flex align-items-center author">
+                        <div class="photo"><img src="@Model[0].AuthorPhoto" alt="" class="img-fluid"></div>
+                        <div class="name">
+                            <h3 class="m-0 p-0">
+                                @Model[0].AuthorFullName
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="post-entry-1 border-bottom">
+                        <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[1].PostId">
+                            <img src="@Model[1].ImagePath" alt="" class="img-fluid">
+                        </a>
+                        <div class="post-meta">
+                            <span class="date">@Model[1].GenreName</span>
+                            <span class="mx-1">&bullet;</span>
+                            <span>@Model[1].CreatedDate.ToShortDateString()</span>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span class="mx-1">&bullet;</span>
+                                @if (Model[1].IsLiked)
+                                {
+                                    <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[1].PostId)"></i>
+
+                                }
+                                else
+                                {
+                                    <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[1].PostId)"></i>
+                                }
+                            }
+                        </div>
+                        <h2 class="mb-2">
+                            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[2].PostId">
+                                @Model[2].Title
+                            </a>
+                        </h2>
+                        <span class="author mb-3 d-block">@Model[2].AuthorFullName</span>
+                        <p class="mb-4 d-block">
+                            <div>
+                                @Html.Raw(Model[2].Content)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div class="post-entry-1">
+                        <div class="post-meta">
+                            <span class="date">@Model[3].GenreName</span>
+                            <span class="mx-1">&bullet;</span>
+                            <span>@Model[3].CreatedDate.ToShortDateString()</span>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span class="mx-1">&bullet;</span>
+                                @if (Model[3].IsLiked)
+                                {
+                                    <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[3].PostId)"></i>
+
+                                }
+                                else
+                                {
+                                    <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[3].PostId)"></i>
+                                }
+                            }
+                        </div>
+                        <h2 class="mb-2">
+                            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[3].PostId">
+                                @Model[3].Title
+                            </a>
+                        </h2>
+                        <span class="author mb-3 d-block">
+                            @Model[3].AuthorFullName
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="post-entry-1">
+                        <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[4].PostId">
+                            <img src="@Model[4].ImagePath" alt="" class="img-fluid">
+                        </a>
+                        <div class="post-meta">
+                            <span class="date">@Model[4].Title</span>
+                            <span class="mx-1">&bullet;</span>
+                            <span>@Model[4].CreatedDate.ToShortDateString()</span>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span class="mx-1">&bullet;</span>
+                                @if (Model[4].IsLiked)
+                                {
+                                    <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[4].PostId)"></i>
+
+                                }
+                                else
+                                {
+                                    <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[4].PostId)"></i>
+                                }
+                            }
+                        </div>
+                        <h2 class="mb-2">
+                            <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[4].PostId">
+                                @Model[4].Title
+                            </a>
+                        </h2>
+                        <span class="author mb-3 d-block">@Model[4].AuthorFullName</span>
+                        <p class="mb-4 d-block">
+                            <div>
+                                @Html.Raw(Model[4].Content)
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="post-entry-1 border-bottom">
+                <div class="post-meta">
+                    <span class="date">@Model[5].GenreName</span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>@Model[5].CreatedDate.ToShortDateString()</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="mx-1">&bullet;</span>
+                        @if (Model[5].IsLiked)
+                        {
+                            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[5].PostId)"></i>
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[5].PostId)"></i>
+                        }
+                    }
+                </div>
+                <h2 class="mb-2">
+                    <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[5].PostId">
+                        @Model[5].Title
+                    </a>
+                </h2>
+                <span class="author mb-3 d-block">@Model[5].AuthorFullName</span>
+            </div>
+
+            <div class="post-entry-1 border-bottom">
+                <div class="post-meta">
+                    <span class="date">@Model[6].GenreName</span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>@Model[6].CreatedDate.ToShortDateString()</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="mx-1">&bullet;</span>
+                        @if (Model[6].IsLiked)
+                        {
+                            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[6].PostId)"></i>
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[6].PostId)"></i>
+                        }
+                    }
+                </div>
+                <h2 class="mb-2">
+                    <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[6].PostId">
+                        @Model[6].Title
+                    </a>
+                </h2>
+                <span class="author mb-3 d-block">@Model[6].AuthorFullName</span>
+            </div>
+
+            <div class="post-entry-1 border-bottom">
+                <div class="post-meta">
+                    <span class="date">@Model[7].GenreName</span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>@Model[7].CreatedDate.ToShortDateString()</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="mx-1">&bullet;</span>
+                        @if (Model[7].IsLiked)
+                        {
+                            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[7].PostId)"></i>
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[7].PostId)"></i>
+                        }
+                    }
+                </div>
+                <h2 class="mb-2">
+                    <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[7].PostId">
+                        @Model[7].Title
+                    </a>
+                </h2>
+                <span class="author mb-3 d-block">@Model[7].AuthorFullName</span>
+            </div>
+
+            <div class="post-entry-1 border-bottom">
+                <div class="post-meta">
+                    <span class="date">@Model[8].GenreName</span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>@Model[8].CreatedDate.ToShortDateString()</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="mx-1">&bullet;</span>
+                        @if (Model[8].IsLiked)
+                        {
+                            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[8].PostId)"></i>
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[8].PostId)"></i>
+                        }
+                    }
+                </div>
+                <h2 class="mb-2">
+                    <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[8].PostId">
+                        @Model[8].Title
+                    </a>
+                </h2>
+                <span class="author mb-3 d-block">@Model[8].AuthorFullName</span>
+            </div>
+
+            <div class="post-entry-1 border-bottom">
+                <div class="post-meta">
+                    <span class="date">@Model[9].GenreName</span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>@Model[9].CreatedDate.ToShortDateString()</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="mx-1">&bullet;</span>
+                        @if (Model[9].IsLiked)
+                        {
+                            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[9].PostId)"></i>
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[9].PostId)"></i>
+                        }
+                    }
+                </div>
+                <h2 class="mb-2">
+                    <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[9].PostId">
+                        @Model[9].Title
+                    </a>
+                </h2>
+                <span class="author mb-3 d-block">@Model[9].AuthorFullName</span>
+            </div>
+
+            <div class="post-entry-1 border-bottom">
+                <div class="post-meta">
+                    <span class="date">@Model[10].GenreName</span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>@Model[10].CreatedDate.ToShortDateString()</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="mx-1">&bullet;</span>
+                        @if (Model[10].IsLiked)
+                        {
+                            <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@Model[10].PostId)"></i>
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@Model[10].PostId)"></i>
+                        }
+                    }
+                </div>
+                <h2 class="mb-2">
+                    <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model[10].PostId">
+                        @Model[10].Title
+                    </a>
+                </h2>
+                <span class="author mb-3 d-block">@Model[10].AuthorFullName</span>
+            </div>
+        </div>
+    </div>
+</div>

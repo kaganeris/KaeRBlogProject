@@ -9,6 +9,10 @@ window.onload = function () {
     getGridPostOne("Siyaset")
     getGridPostOne("Dünya")
     getGridPostOne("Donanım")
+    FirstSection("Yazılım")
+    SecondSection("Dünya")
+    ThirdSection("Spor")
+    GetTrendPosts()
     $('.reply-btn').click(function () {
         // Tıklanan "Yanıtla" düğmesine sahip olan yanıtın formunu göster/gizle
         $(this).closest('.comment').find('.reply-form').toggle();
@@ -60,6 +64,65 @@ function getGridPostOne(genreName) {
             else if ($("#gridPostSix").children().length === 0) {
                 $("#gridPostSix").html(response);
             }
+        }
+    })
+}
+
+function FirstSection(genreName) {
+    $.ajax({
+        url: "/Post/FirstSectionPosts",
+        type: "GET",
+        data: { 'genreName': genreName },
+        success: function (response) {
+            $("#firstSection").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+            console.log(genreName + " FirstSection")
+        }
+    })
+}
+
+function SecondSection(genreName) {
+    $.ajax({
+        url: "/Post/SecondSectionPosts",
+        type: "GET",
+        data: { 'genreName': genreName },
+        success: function (response) {
+            $("#secondSection").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+            console.log(genreName + " SecondSection")
+        }
+    })
+}
+
+function ThirdSection(genreName) {
+    $.ajax({
+        url: "/Post/ThirdSectionPosts",
+        type: "GET",
+        data: { 'genreName': genreName },
+        success: function (response) {
+            $("#thirdSection").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+            console.log(genreName + " ThirdSection")
+        }
+    })
+}
+
+function GetTrendPosts() {
+    $.ajax({
+        url: "/Post/GetTrendPosts",
+        type: "GET",
+        success: function (response) {
+            $("#trend").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+            console.log(genreName + " Trend")
         }
     })
 }

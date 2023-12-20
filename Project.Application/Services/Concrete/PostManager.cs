@@ -155,6 +155,91 @@ namespace Project.Application.Services.Concrete
             return postGridVM;
         }
 
+        public async Task<PostGridVM> GetRandomPost(string genreName, Guid userId)
+        {
+            List<PostGridVM> postGridVMList = await postRepository.GetFilteredList(
+                select: x => new PostGridVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                    IsLiked = x.Likes.Any(x => x.AppUserId == userId),
+                },
+                where: x => x.Genre.Name.ToLower() == genreName.ToLower() &&
+                            x.Status != Domain.Enums.Status.Passive,
+                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+            );
+
+
+            if (postGridVMList != null && postGridVMList.Any())
+            {
+                var random = new Random();
+                int randomIndex = random.Next(0, postGridVMList.Count);
+                return postGridVMList[randomIndex];
+            }
+
+            return await GetRandomPost(genreName,userId);
+        }
+
+        public async Task<List<PostGridVM>> GetTrendingPosts()
+        {
+            DateTime lastWeek = DateTime.Now.AddDays(-7); // Geçen haftanın başlangıç tarihi
+            DateTime now = DateTime.Now; // Şu anki tarih
+
+            List<PostGridVM> postGridVM = await postRepository.GetFilteredList(
+                select: x => new PostGridVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                },
+                where: x => x.Status != Domain.Enums.Status.Passive &&
+                            x.CreatedDate >= lastWeek && x.CreatedDate <= now, // Geçen hafta içinde olanlar
+                orderBy: x => x.OrderByDescending(x => x.Likes.Count), // Beğeni sayısına göre sırala
+                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+            );
+
+            return postGridVM.Take(5).ToList();
+        }
+
+        public async Task<List<PostGridVM>> GetSectionPosts(string genreName, Guid userId)
+        {
+            DateTime lastWeek = DateTime.Now.AddDays(-7); // Geçen haftanın başlangıç tarihi
+            DateTime now = DateTime.Now; // Şu anki tarih
+
+            List<PostGridVM> postGridVM = await postRepository.GetFilteredList(
+                select: x => new PostGridVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                    IsLiked = x.Likes.Any(x => x.AppUserId == userId),
+                },
+                where: x => x.Genre.Name.ToLower() == genreName.ToLower() &&
+                            x.Status != Domain.Enums.Status.Passive &&
+                            x.CreatedDate >= lastWeek && x.CreatedDate <= now, // Geçen hafta içinde olanlar
+                orderBy: x => x.OrderByDescending(x => x.Likes.Count), // Beğeni sayısına göre sırala
+                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+            );
+
+            return postGridVM.Take(11).ToList();
+        }
+
         public async Task IncreaseClickCount(int id)
         {
             Post post = await postRepository.GetDefault(x => x.Id == id);

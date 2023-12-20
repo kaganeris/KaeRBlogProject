@@ -20,6 +20,9 @@ namespace Project.Application.Services.Abstract
         Task<List<PostHeroDTO>> GetHeroPosts();
 
         Task<PostGridVM> GetPostGridVM(string genreName,Guid userId);
+        Task<PostGridVM> GetRandomPost(string genreName,Guid userId);
+        Task<List<PostGridVM>> GetTrendingPosts();
+        Task<List<PostGridVM>> GetSectionPosts(string genreName,Guid userId);
 
         Task IncreaseClickCount(int id);
     }

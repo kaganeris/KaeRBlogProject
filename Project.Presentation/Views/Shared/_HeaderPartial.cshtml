@@ -9,7 +9,7 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="index.html">Anasayfa</a></li>
+                <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
                 <li class="dropdown">
                     <a href="category.html"><span>Kategoriler</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
@@ -30,8 +30,8 @@
                     </ul>
                 </li>
 
-                <li><a href="about.html">Hakkımızda</a></li>
-                <li><a href="contact.html">İletişim</a></li>
+                <li><a asp-controller="Home" asp-action="AboutUs">Hakkımızda</a></li>
+                <li><a asp-controller="Home" asp-action="ContactUs">İletişim</a></li>
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <li>
