@@ -23,6 +23,7 @@ namespace Project.Application.Services.Abstract
         Task<PostGridVM> GetRandomPost(string genreName,Guid userId);
         Task<List<PostGridVM>> GetTrendingPosts();
         Task<List<PostGridVM>> GetSectionPosts(string genreName,Guid userId);
+        Task<List<PostDetailVM>> GetProfilePosts(Guid userId);
 
         Task IncreaseClickCount(int id);
     }

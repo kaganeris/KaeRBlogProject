@@ -237,5 +237,17 @@ namespace Project.Presentation.Controllers
             return PartialView("_TrendPostsPartial", postGridVM);
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ProfilePosts()
+        {
+            var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            string userID = userIDClaim.Value;
+
+            List<PostDetailVM> postDetailVMs = await postService.GetProfilePosts(Guid.Parse(userID));
+
+            return PartialView("_ProfilePostPartial", postDetailVMs);
+
+        }
     }
 }

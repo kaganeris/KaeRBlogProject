@@ -13,6 +13,8 @@ namespace Project.Application.Models.VMs.PostVMs
     {
         public int PostId { get; set; }
         public Guid AppUserId { get; set; }
+        public string AuthorFullName { get; set; }
+        public string AuthorPhoto { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string ImagePath { get; set; }

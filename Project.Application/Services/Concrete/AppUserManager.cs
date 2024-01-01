@@ -6,12 +6,13 @@ using Project.Application.Models.DTOs.ConfirmMailDTOs;
 using Project.Application.Services.Abstract;
 using Project.Domain.Entities;
 using Project.Domain.Repositories;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Project.Application.Services.Concrete
 {
@@ -153,6 +154,28 @@ namespace Project.Application.Services.Concrete
                 return appUser.Email;
             else
                 return "Hata!";
+        }
+
+        public async Task UpdateUserDetail(UpdateUserDetailDTO model)
+        {
+            AppUser appUser = await userManager.FindByIdAsync(model.Id.ToString());
+
+            if (appUser != null)
+            {
+                using var image = Image.Load(model.UploadPath.OpenReadStream());
+
+                image.Mutate(x => x.Resize(300, 300));
+
+                Guid guid = Guid.NewGuid();
+
+                image.Save($"wwwroot/images/profilePhotos/{guid}.jpg"); 
+
+                model.ImagePath = $"/images/profilePhotos/{guid}.jpg";
+
+                appUser = mapper.Map(model, appUser);
+
+               await userManager.UpdateAsync(appUser);
+            }
         }
     }
 }

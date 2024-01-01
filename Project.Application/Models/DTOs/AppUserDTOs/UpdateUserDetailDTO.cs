@@ -16,11 +16,11 @@ namespace Project.Application.Models.DTOs.AppUserDTOs
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Ad boş geçilemez!")]
-        [MinLength(6, ErrorMessage = "Ad minimum 3 karakterden oluşmalıdır!")]
+        [MinLength(3, ErrorMessage = "Ad minimum 3 karakterden oluşmalıdır!")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Soyad boş geçilemez!")]
-        [MinLength(6, ErrorMessage = "Soyad minimum 3 karakterden oluşmalıdır!")]
+        [MinLength(3, ErrorMessage = "Soyad minimum 3 karakterden oluşmalıdır!")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Doğum Tarihi boş geçilemez!")]

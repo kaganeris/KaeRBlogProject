@@ -231,13 +231,53 @@ namespace Project.Application.Services.Concrete
                     IsLiked = x.Likes.Any(x => x.AppUserId == userId),
                 },
                 where: x => x.Genre.Name.ToLower() == genreName.ToLower() &&
-                            x.Status != Domain.Enums.Status.Passive &&
-                            x.CreatedDate >= lastWeek && x.CreatedDate <= now, // Geçen hafta içinde olanlar
+                            x.Status != Domain.Enums.Status.Passive /*&&
+                            x.CreatedDate >= lastWeek && x.CreatedDate <= now*/, // Geçen hafta içinde olanlar
                 orderBy: x => x.OrderByDescending(x => x.Likes.Count), // Beğeni sayısına göre sırala
                 include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
             );
 
             return postGridVM.Take(11).ToList();
+        }
+
+        public async Task<List<PostDetailVM>> GetProfilePosts(Guid userId)
+        {
+
+            List<PostDetailVM> postDetailVMList = await postRepository.GetFilteredList(
+                select: x => new PostDetailVM
+                {
+                    PostId = x.Id,
+                    AppUserId = x.Author.AppUserId,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                    ClickCount = x.ClickCount,
+                    LikeCount = x.Likes.Count,
+                    IsLiked = x.Likes.Any(x => x.AppUserId == userId),
+                    Comments = x.Comments.Select(x => new CommentDTO
+                    {
+                        CommentId = x.Id,
+                        Content = x.Content,
+                        AppUserFullName = x.AppUser.FullName,
+                        CreatedDate = x.CreatedDate,
+                        Replies = x.Replies.Select(x => new ReplyDTO
+                        {
+                            Content = x.Content,
+                            AppUserImagePath = x.AppUser.ImagePath,
+                            AppUserFullName = x.AppUser.FullName,
+                            CreatedDate = x.CreatedDate
+                        }).ToList(),
+                    }).ToList(),
+                },
+                where: x => x.Status != Domain.Enums.Status.Passive && x.Author.AppUser.Id == userId,
+                include: x => x.Include(x => x.Genre).Include(x => x.Author).ThenInclude(x => x.AppUser).Include(x => x.Comments)
+                );
+
+            return postDetailVMList;
         }
 
         public async Task IncreaseClickCount(int id)

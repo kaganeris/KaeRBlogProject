@@ -8,6 +8,6 @@ namespace Project.Application.Models.DTOs.AuthorDTOs
 {
     public class CreateAuthorDTO
     {
-
+        public Guid AppUserId { get; set; }
     }
 }

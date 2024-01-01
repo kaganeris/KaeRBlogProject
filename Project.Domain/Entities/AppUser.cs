@@ -24,6 +24,7 @@ namespace Project.Domain.Entities
         public string FullName => FirstName + " " + LastName;
         public DateTime? BirthDate { get; set; }
         public Gender? Gender { get; set; }
+        public string About { get; set; }
         public string ImagePath { get; set; }
 
         [NotMapped] // DB'de yer almayacak

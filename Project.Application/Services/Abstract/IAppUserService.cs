@@ -18,5 +18,7 @@ namespace Project.Application.Services.Abstract
         Task UpdateUser(UpdateUserDTO model);
         Task<bool> EmailConfirm(ConfirmMailDTO confirmMailDTO);
         Task<string> GetUserEmail(LoginDTO loginDTO);
+
+        Task UpdateUserDetail(UpdateUserDetailDTO model);
     }
 }

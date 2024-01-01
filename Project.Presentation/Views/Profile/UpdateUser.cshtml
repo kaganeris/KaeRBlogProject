@@ -1,0 +1,74 @@
+﻿@using Project.Application.Models.DTOs.AppUserDTOs;
+@using Project.Domain.Enums;
+@{
+    Layout = null;
+}
+@model UpdateUserDetailDTO
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/loginTemplate/css/style.css">
+
+</head>
+<body class="img js-fullheight" style="background-image: url(/images/profilePhotos/updateUserBG.jpg);">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">KaeR Blog</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+                        <h3 class="mb-4 text-center">
+                            Kullanıcı Bilgilerini Güncelle
+                        </h3>
+                        <form asp-action="UpdateUser" asp-controller="Profile" method="post" class="signin-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">Profil Fotoğrafı</label>
+                                <input asp-for="UploadPath" type="file" class="form-control-file" id="exampleFormControlFile1">
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="FirstName" type="text" class="form-control" placeholder="Ad" required>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="LastName" type="text" class="form-control" placeholder="Soyad" required>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="BirthDate" type="date" class="form-control" placeholder="Doğum Tarihi" required>
+                            </div>
+                            <div class="form-group">
+                                <select asp-for="Gender" class="form-control">
+                                    <option value="@Gender.Male">Erkek</option>
+                                    <option value="@Gender.Female">Kadın</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="form-control btn btn-primary submit px-3" value="Güncelle" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/loginTemplate/js/jquery.min.js"></script>
+    <script src="~/loginTemplate/js/popper.js"></script>
+    <script src="~/loginTemplate/js/bootstrap.min.js"></script>
+    <script src="~/loginTemplate/js/main.js"></script>
+
+</body>
+</html>
+
+
