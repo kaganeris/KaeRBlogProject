@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project.Application.Models.DTOs.AppUserDTOs;
 using Project.Application.Models.DTOs.AuthorDTOs;
@@ -13,18 +14,20 @@ namespace Project.Presentation.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly IAppUserService userService;
         private readonly IAuthorService authorService;
+        private readonly IMapper mapper;
 
-        public ProfileController(UserManager<AppUser> userManager, IAppUserService userService,IAuthorService authorService)
+        public ProfileController(UserManager<AppUser> userManager, IAppUserService userService, IAuthorService authorService, IMapper mapper)
         {
             this.userManager = userManager;
             this.userService = userService;
             this.authorService = authorService;
+            this.mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if(userIDClaim == null)
+            if (userIDClaim == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -46,9 +49,18 @@ namespace Project.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateUser()
+        public async Task<IActionResult> UpdateUser(Guid Id)
         {
-            return View();
+            AppUser appUser = await userManager.FindByIdAsync(Id.ToString());
+            if (appUser == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                UpdateUserDetailDTO updateUserDetailDTO = mapper.Map<UpdateUserDetailDTO>(appUser);
+                return View(updateUserDetailDTO);
+            }
         }
 
         [HttpPost]

@@ -203,13 +203,58 @@ namespace Project.Application.Services.Concrete
                     AuthorPhoto = x.Author.AppUser.ImagePath,
                     GenreName = x.Genre.Name,
                 },
-                where: x => x.Status != Domain.Enums.Status.Passive &&
-                            x.CreatedDate >= lastWeek && x.CreatedDate <= now, // Geçen hafta içinde olanlar
+                where: x => x.Status != Domain.Enums.Status.Passive /*&&
+                            x.CreatedDate >= lastWeek && x.CreatedDate <= now*/, // Geçen hafta içinde olanlar
                 orderBy: x => x.OrderByDescending(x => x.Likes.Count), // Beğeni sayısına göre sırala
                 include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
             );
 
-            return postGridVM.Take(5).ToList();
+            return postGridVM.Take(6).ToList();
+        }
+        public async Task<List<PostGridVM>> GetPopulerPosts()
+        {
+
+            List<PostGridVM> postGridVM = await postRepository.GetFilteredList(
+                select: x => new PostGridVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                },
+                where: x => x.Status != Domain.Enums.Status.Passive /*&&
+                            x.CreatedDate >= lastWeek && x.CreatedDate <= now*/, // Geçen hafta içinde olanlar
+                orderBy: x => x.OrderByDescending(x => x.ClickCount), // Tıklanma sayısına göre sırala
+                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+            );
+
+            return postGridVM.Take(6).ToList();
+        }
+        public async Task<List<PostGridVM>> GetLatestPosts()
+        {
+
+            List<PostGridVM> postGridVM = await postRepository.GetFilteredList(
+                select: x => new PostGridVM
+                {
+                    PostId = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    ImagePath = x.ImagePath,
+                    CreatedDate = x.CreatedDate,
+                    AuthorFullName = x.Author.AppUser.FullName,
+                    AuthorPhoto = x.Author.AppUser.ImagePath,
+                    GenreName = x.Genre.Name,
+                },
+                where: x => x.Status != Domain.Enums.Status.Passive,
+                orderBy: x => x.OrderByDescending(x => x.CreatedDate), // Tıklanma sayısına göre sırala
+                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+            );
+
+            return postGridVM.Take(6).ToList();
         }
 
         public async Task<List<PostGridVM>> GetSectionPosts(string genreName, Guid userId)
@@ -297,6 +342,30 @@ namespace Project.Application.Services.Concrete
                 await postRepository.Update(post);
                 return true;
             }
+        }
+
+        public async Task<List<PostGridVM>> GetCategoryPostsByPageNumber(string categoryName, int pageNumber, Guid userId)
+        {
+            List<PostGridVM> postGridVM = await postRepository.GetFilteredList(
+               select: x => new PostGridVM
+               {
+                   PostId = x.Id,
+                   Title = x.Title,
+                   Content = x.Content,
+                   ImagePath = x.ImagePath,
+                   CreatedDate = x.CreatedDate,
+                   AuthorFullName = x.Author.AppUser.FullName,
+                   AuthorPhoto = x.Author.AppUser.ImagePath,
+                   GenreName = x.Genre.Name,
+                   IsLiked = x.Likes.Any(x => x.AppUserId == userId),
+               },
+               where: x => x.Genre.Name.ToLower() == categoryName.ToLower() &&
+                           x.Status != Domain.Enums.Status.Passive,
+               orderBy: x => x.OrderByDescending(x => x.Likes.Count), // Beğeni sayısına göre sırala
+               include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
+           );
+
+            return postGridVM.Skip((pageNumber*5)-5).Take(5).ToList();
         }
     }
 }

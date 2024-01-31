@@ -24,7 +24,13 @@ namespace Project.Application.AutoMapper
         {
             CreateMap<AppUser, RegisterDTO>().ReverseMap();
             CreateMap<AppUser, UpdateUserDTO>().ReverseMap();
-            CreateMap<AppUser, UpdateUserDetailDTO>().ReverseMap();
+            CreateMap<AppUser, UpdateUserDetailDTO>().ReverseMap()
+                .ForMember(dest => dest.ImagePath, opt => opt.Condition(src => src.ImagePath != null))
+                .ForMember(dest => dest.FirstName, opt => opt.Condition(src => src.FirstName != null))
+                .ForMember(dest => dest.LastName, opt => opt.Condition(src => src.LastName != null))
+                .ForMember(dest => dest.BirthDate, opt => opt.Condition(src => src.BirthDate != null))
+                .ForMember(dest => dest.About, opt => opt.Condition(src => src.About != null))
+                .ForMember(dest => dest.Gender, opt => opt.Condition(src => src.Gender != null));
 
             CreateMap<Author, CreateAuthorDTO>().ReverseMap();
             CreateMap<Author, UpdateAuthorDTO>().ReverseMap();

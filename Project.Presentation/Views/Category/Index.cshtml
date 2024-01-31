@@ -1,0 +1,131 @@
+﻿@using Project.Application.Models.VMs.GenreVMs;
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model GenreVM
+
+<main id="main">
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-9" data-aos="fade-up">
+                    <h3 class="category-title">Kategori: @Model.Name</h3>
+                    <div id="categoryPosts" data-category="@Model.Name">
+                    </div>
+
+
+                    <div class="text-start py-4">
+                        <div class="custom-pagination">
+                            <a href="#" class="prev" onclick="previousPage()">Geri</a>
+                            <a onclick="CategoryPosts('@Model.Name', 1)" id="cat1" class="active">1</a>
+                            <a onclick="CategoryPosts('@Model.Name', 2)" id="cat2">2</a>
+                            <a onclick="CategoryPosts('@Model.Name', 3)" id="cat3">3</a>
+                            <a onclick="CategoryPosts('@Model.Name', 4)" id="cat4">4</a>
+                            <a onclick="CategoryPosts('@Model.Name', 5)" id="cat5">5</a>
+                            <a href="#" class="next" onclick="nextPage()">İleri</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <!-- ======= Sidebar ======= -->
+                    <div class="aside-block">
+
+                        <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Popüler</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="false">Trends</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Son Postlar</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+
+                            <!-- Popular -->
+                            <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+
+                            </div> <!-- End Popular -->
+                            <!-- Trending -->
+                            <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
+                            </div> <!-- End Trending -->
+                            <!-- Latest -->
+                            <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+
+
+                            </div> <!-- End Latest -->
+
+                        </div>
+                    </div>
+
+                    <div class="aside-block">
+                        <h3 class="aside-title">Video</h3>
+                        <div class="video-post">
+                            <a href="https://www.youtube.com/watch?v=YZ5tOe7y9x4" class="glightbox link-video">
+                                <span class="bi-play-fill"></span>
+                                <img src="~/mainTemplate/assets/img/post-landscape-5.jpg" alt="" class="img-fluid">
+                            </a>
+                        </div>
+                    </div><!-- End Video -->
+
+                    <div class="aside-block">
+                        <h3 class="aside-title">Categories</h3>
+                        <ul class="aside-links list-unstyled">
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Teknoloji" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Teknoloji</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Yazılım" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Yazılım</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Spor" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Spor</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Siyaset" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Siyaset</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Otomotiv" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Otomotiv</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Dünya" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Dünya</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Donanım" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-chevron-right"></i> Donanım</a></li>
+                        </ul>
+                    </div><!-- End Categories -->
+
+                    <div class="aside-block">
+                        <h3 class="aside-title">Tags</h3>
+                        <ul class="aside-tags list-unstyled">
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Teknoloji" asp-route-returnUrl="@Context.Request.Path">Teknoloji</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Yazılım" asp-route-returnUrl="@Context.Request.Path">Yazılım</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Spor" asp-route-returnUrl="@Context.Request.Path">Spor</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Siyaset" asp-route-returnUrl="@Context.Request.Path">Siyaset</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Otomotiv" asp-route-returnUrl="@Context.Request.Path">Otomotiv</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Dünya" asp-route-returnUrl="@Context.Request.Path">Dünya</a></li>
+                            <li><a asp-action="Index" asp-controller="Category" asp-route-categoryName="Donanım" asp-route-returnUrl="@Context.Request.Path">Donanım</a></li>
+                        </ul>
+                    </div><!-- End Tags -->
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    var categoryName = document.getElementById("categoryPosts").getAttribute("data-category");
+    console.log(categoryName);
+    function CategoryPosts(categoryName, pageNumber) {
+        let catPostData = {
+            categoryName: categoryName,
+            pageNumber: pageNumber
+        }
+        $.ajax({
+            url: "/Post/GetCategoryPosts",
+            type: "POST",
+            data: catPostData,
+            success: function (response) {
+                $("#categoryPosts").html("");
+                $("#categoryPosts").html(response);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    }
+    CategoryPosts(categoryName, 1)
+</script>

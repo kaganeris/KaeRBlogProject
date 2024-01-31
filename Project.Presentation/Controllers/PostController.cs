@@ -239,6 +239,40 @@ namespace Project.Presentation.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetPopulerPosts()
+        {
+            List<PostGridVM> postGridVM = await postService.GetPopulerPosts();
+
+            return PartialView("_PopulerPostsPartial", postGridVM);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetLatestPosts()
+        {
+            List<PostGridVM> postGridVM = await postService.GetLatestPosts();
+
+            return PartialView("_LatestPostsPartial", postGridVM);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetLatestFooterPosts()
+        {
+            List<PostGridVM> postGridVM = await postService.GetLatestPosts();
+            List<PostGridVM> deneme = postGridVM.Take(4).ToList();
+            return PartialView("_LatestPostsFooterPartial", deneme);
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDetailTrendPosts()
+        {
+            List<PostGridVM> postGridVM = await postService.GetTrendingPosts();
+
+            return PartialView("_TrendPostsDetailPartial", postGridVM);
+
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ProfilePosts()
         {
             var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
@@ -248,6 +282,24 @@ namespace Project.Presentation.Controllers
 
             return PartialView("_ProfilePostPartial", postDetailVMs);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetCategoryPosts(string categoryName,int pageNumber)
+        {
+            var userIDClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIDClaim == null)
+            {
+                List<PostGridVM> postGridVM = await postService.GetCategoryPostsByPageNumber(categoryName, pageNumber, Guid.NewGuid());
+                return PartialView("_CategoryPostsByPageNumberPartial", postGridVM);
+            }
+            else
+            {
+                string userID = userIDClaim.Value;
+                List<PostGridVM> postGridVM = await postService.GetCategoryPostsByPageNumber(categoryName, pageNumber, Guid.Parse(userID));
+                return PartialView("_CategoryPostsByPageNumberPartial", postGridVM);
+
+            }
         }
     }
 }

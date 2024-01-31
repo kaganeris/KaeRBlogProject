@@ -1,0 +1,43 @@
+﻿@using Project.Application.Models.VMs.PostVMs
+
+@model List<PostGridVM>
+
+@foreach (var item in Model)
+{
+    <div class="d-md-flex post-entry-2 half">
+        <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@item.PostId" class="me-4 thumbnail">
+            <img src="@item.ImagePath" alt="" class="img-fluid">
+        </a>
+        <div>
+            <div class="post-meta">
+                <span class="date">@item.GenreName</span> <span class="mx-1">&bullet;</span> <span>@item.CreatedDate.ToShortDateString()</span>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span class="mx-1">&bullet;</span>
+                    @if (item.IsLiked)
+                    {
+                        <i class="fa fa-thumbs-up green-color" onclick="UnlikePost(this,@item.PostId)"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-thumbs-down red-color" onclick="LikePost(this,@item.PostId)"></i>
+                    }
+                }
+            </div>
+            <h3>
+                <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@item.PostId">
+                    @item.Title
+                </a>
+            </h3>
+            <p>
+                @Html.Raw(item.Content)
+            </p>
+            <div class="d-flex align-items-center author">
+                <div class="photo"><img src="@item.AuthorPhoto" alt="" class="img-fluid"></div>
+                <div class="name">
+                    <h3 class="m-0 p-0">@item.AuthorFullName</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+}

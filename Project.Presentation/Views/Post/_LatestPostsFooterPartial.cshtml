@@ -1,0 +1,17 @@
+﻿@using Project.Application.Models.VMs.PostVMs
+
+@model List<PostGridVM>
+
+@foreach (var item in Model)
+{
+    <li>
+        <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@item.PostId" class="d-flex align-items-center">
+            <img src="@item.ImagePath" alt="" class="img-fluid me-3">
+            <div>
+                <div class="post-meta d-block"><span class="date">@item.GenreName</span> <span class="mx-1">&bullet;</span> <span>@item.CreatedDate.ToShortDateString()</span></div>
+                <span> @item.Title</span>
+            </div>
+        </a>
+    </li>
+}
+

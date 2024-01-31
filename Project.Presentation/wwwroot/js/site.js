@@ -13,6 +13,10 @@ window.onload = function () {
     SecondSection("Dünya")
     ThirdSection("Spor")
     GetTrendPosts()
+    GetDetailTrendPosts()
+    GetPopulerPosts()
+    GetLatestPosts()
+    GetLatestFooterPosts()
     $('.reply-btn').click(function () {
         // Tıklanan "Yanıtla" düğmesine sahip olan yanıtın formunu göster/gizle
         $(this).closest('.comment').find('.reply-form').toggle();
@@ -122,10 +126,104 @@ function GetTrendPosts() {
         },
         error: function (err) {
             console.log(err)
-            console.log(genreName + " Trend")
         }
     })
 }
+
+function GetDetailTrendPosts() {
+    $.ajax({
+        url: "/Post/GetDetailTrendPosts",
+        type: "GET",
+        success: function (response) {
+            $("#pills-trending").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+
+function GetLatestPosts() {
+    $.ajax({
+        url: "/Post/GetLatestPosts",
+        type: "GET",
+        success: function (response) {
+            $("#pills-latest").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+function GetLatestFooterPosts() {
+    $.ajax({
+        url: "/Post/GetLatestFooterPosts",
+        type: "GET",
+        success: function (response) {
+            $("#latestPostFooter").html(response);
+            console.log("lastes footer post çalıştı",response)
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+
+function GetPopulerPosts() {
+    $.ajax({
+        url: "/Post/GetPopulerPosts",
+        type: "GET",
+        success: function (response) {
+            $("#pills-popular").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+// Global olarak tutulan bir değişken üzerinden pageNumber değerini saklayın
+let currentPageNumber = 1;
+
+// Next butonuna tıklanınca çağrılacak fonksiyon
+function nextPage() {
+    currentPageNumber++;
+    CategoryPosts(categoryName, currentPageNumber);
+}
+
+// Previous butonuna tıklanınca çağrılacak fonksiyon
+function previousPage() {
+    if (currentPageNumber > 1) {
+        currentPageNumber--;
+        CategoryPosts(categoryName, currentPageNumber);
+    }
+}
+
+function CategoryPosts(categoryName, pageNumber) {
+    let catPostData = {
+        categoryName: categoryName,
+        pageNumber: pageNumber
+    }
+    $.ajax({
+        url: "/Post/GetCategoryPosts",
+        type: "POST",
+        data: catPostData,
+        success: function (response) {
+            // Tüm sayfa düğmelerinden 'active' sınıfını kaldır
+            $('.custom-pagination a').removeClass('active');
+
+            // Seçilen sayfa düğmesine 'active' sınıfını ekle
+            $(`#cat${pageNumber}`).addClass("active");
+            currentPageNumber = pageNumber;
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
+            $("#categoryPosts").html("");
+            $("#categoryPosts").html(response);
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+
 
 function LikePost(x, postId) {
     let likeData = {
@@ -259,6 +357,9 @@ function DeletePost(id) {
         }
     });
 }
+
+
+
 
 function showSuccessNotification() {
     // Create a popup or notification element

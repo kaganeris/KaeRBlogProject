@@ -24,7 +24,7 @@
                         <div class="cover">
                             <div class="gray-shade"></div>
                             <figure>
-                                <img src="https://bootdey.com/img/Content/bg1.jpg" width="500" height="300" alt="profile cover">
+                                <img src="~/images/kaer-blog-high-resolution-logo.png" width="500" height="300" alt="profile cover">
                             </figure>
                             <div class="cover-body d-flex justify-content-between align-items-center">
                                 <div>
@@ -52,7 +52,7 @@
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <a asp-action="UpdateUser" asp-controller="Profile" asp-route-id ="@Model.Id" class="dropdown-item d-flex align-items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
                                                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                             </svg> <span>Güncelle</span>
@@ -89,7 +89,7 @@
                 </div>
 
 
-                <div class="col-md-8 col-xl-6 middle-wrapper">
+                <div class="col-md-8 col-xl-9 middle-wrapper">
                     @if (User.IsInRole("Author"))
                     {
                         <div class="row" id="profile-post">
@@ -101,40 +101,6 @@
                         <button onclick="BeAuthor('@Model.Id')">Yazar Ol</button>
                     }
 
-                </div>
-
-
-                <div class="d-none d-xl-block col-xl-3 right-wrapper">
-                    <div class="row">
-                        <div class="aside-block">
-
-                            <div class="container mt-4">
-                                <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="pills-popular-tab" data-toggle="pill" href="#pills-popular" role="tab" aria-controls="pills-popular" aria-selected="true">Popüler</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-trending-tab" data-toggle="pill" href="#pills-trending" role="tab" aria-controls="pills-trending" aria-selected="false">Trendler</a>
-                                    </li>
-                                </ul>
-
-                                <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
-                                        <!-- Popüler içeriği buraya -->
-                                        <div class="card-body">
-                                            <div class="post-meta"><span class="badge bg-success">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                            <h5 class="card-title"><a href="#" class="text-dark">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h5>
-                                            <p class="card-text text-muted">Jenny Wilson</p>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
-                                        <!-- Trendler içeriği buraya -->
-                                        <p>Burası trendler içeriğin olduğu bölüm.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>

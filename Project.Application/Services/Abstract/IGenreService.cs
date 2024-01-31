@@ -12,6 +12,7 @@ namespace Project.Application.Services.Abstract
     {
         Task<List<GenreVM>> GetGenreList();
         Task<UpdateGenreDTO> GetGenreById(int id);
+        Task<GenreVM> GetGenreByName(string genreName);
 
         Task<bool> CreateGenre(CreateGenreDTO createGenreDTO);
         Task<bool> UpdateGenre(UpdateGenreDTO updateGenreDTO);

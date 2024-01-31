@@ -64,6 +64,26 @@ namespace Project.Application.Services.Concrete
             }
         }
 
+        public async Task<GenreVM> GetGenreByName(string genreName)
+        {
+            if(genreName == null)
+            {
+                return null;
+            }
+            else
+            {
+                GenreVM genreVM = await genreRepository.GetFilteredFirstOrDefault(
+                    select: x => new GenreVM
+                    {
+                        Name = x.Name,
+                        Id = x.Id
+                    },
+                    where: x => x.Name == genreName);
+
+                return genreVM;
+            }
+        }
+
         public async Task<List<GenreVM>> GetGenreList()
         {
             return await genreRepository.GetFilteredList(
