@@ -24,6 +24,6 @@ namespace Project.Domain.Entities
 
         // Navigation Properties
         public AppUser AppUser { get; set; }
-        public List<Post> Posts { get; set; }
+        public List<Post>? Posts { get; set; }
     }
 }

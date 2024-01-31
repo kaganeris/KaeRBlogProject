@@ -13,9 +13,9 @@ namespace Project.Infrastructure.EntityTypeConfig
         public override void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Title).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Title).IsRequired();
             builder.Property(x => x.Content).IsRequired();
-            builder.Property(x => x.ImagePath).IsRequired(false).HasMaxLength(250);
+            builder.Property(x => x.ImagePath).IsRequired(false);
             builder.HasOne(x => x.Author).WithMany(x => x.Posts).HasForeignKey(x => x.AuthorId);
             builder.HasOne(x => x.Genre).WithMany(x => x.Posts).HasForeignKey(x => x.GenreId);
 

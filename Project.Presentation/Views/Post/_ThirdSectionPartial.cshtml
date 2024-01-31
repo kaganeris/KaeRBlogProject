@@ -40,7 +40,7 @@
                 </h2>
                 <p class="mb-4 d-block">
                     <div>
-                        @Html.Raw(Model[0].Content)
+                        @Html.Raw(Model[0].Content.Substring(0, 200))...
                     </div>
                 </p>
 

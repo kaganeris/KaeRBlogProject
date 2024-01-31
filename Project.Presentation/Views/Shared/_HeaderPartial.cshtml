@@ -40,6 +40,10 @@
                     {
                         <li><a  asp-action="Create" asp-controller="Post">Makale Yaz</a></li>
                     }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <li><a asp-area="Admin" asp-action="Index" asp-controller="Home">Admin Paneli</a></li>
+                    }
                     <li>
                         <a asp-area="" asp-controller="Profile" asp-action="Index">Profilim</a>
                     </li>

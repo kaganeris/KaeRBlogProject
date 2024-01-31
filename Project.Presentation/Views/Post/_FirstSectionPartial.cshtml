@@ -43,7 +43,7 @@
                     </h3>
                     <p>
                         <div>
-                            @Html.Raw(Model[0].Content)
+                            @Html.Raw(Model[0].Content.Substring(0, 220))...
                         </div>
                     </p>
                     <div class="d-flex align-items-center author">
@@ -89,7 +89,7 @@
                         <span class="author mb-3 d-block">@Model[2].AuthorFullName</span>
                         <p class="mb-4 d-block">
                             <div>
-                                @Html.Raw(Model[2].Content)
+                                @Html.Raw(Model[2].Content.Substring(0, 220))...
                             </div>
                         </p>
                     </div>
@@ -154,7 +154,7 @@
                         <span class="author mb-3 d-block">@Model[4].AuthorFullName</span>
                         <p class="mb-4 d-block">
                             <div>
-                                @Html.Raw(Model[4].Content)
+                                @Html.Raw(Model[4].Content.Substring(0, 400))...
                             </div>
                         </p>
                     </div>

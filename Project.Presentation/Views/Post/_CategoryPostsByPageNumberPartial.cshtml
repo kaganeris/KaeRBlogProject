@@ -30,7 +30,13 @@
                 </a>
             </h3>
             <p>
-                @Html.Raw(item.Content)
+                @{
+                    // İçerik metninin ilk 320 karakterini almak
+                    string first30Chars = Model[0].Content.Length > 320 ? Model[0].Content.Substring(0, 320) + "..." : Model[0].Content;
+                }
+
+                @Html.Raw(first30Chars)
+
             </p>
             <div class="d-flex align-items-center author">
                 <div class="photo"><img src="@item.AuthorPhoto" alt="" class="img-fluid"></div>

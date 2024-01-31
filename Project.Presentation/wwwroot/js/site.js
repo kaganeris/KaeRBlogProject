@@ -217,9 +217,10 @@ function CategoryPosts(categoryName, pageNumber) {
             $('html, body').animate({ scrollTop: 0 }, 'fast');
             $("#categoryPosts").html("");
             $("#categoryPosts").html(response);
+            console.log("categoryposts çalıştı",response)
         },
         error: function (err) {
-            console.log(err)
+            console.log("category post hata",err)
         }
     })
 }

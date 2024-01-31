@@ -282,7 +282,7 @@ namespace Project.Application.Services.Concrete
                 include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
             );
 
-            return postGridVM.Take(11).ToList();
+            return postGridVM.Take(15).ToList();
         }
 
         public async Task<List<PostDetailVM>> GetProfilePosts(Guid userId)

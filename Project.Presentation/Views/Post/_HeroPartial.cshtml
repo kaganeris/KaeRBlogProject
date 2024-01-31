@@ -7,8 +7,8 @@
         <a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@item.PostId" class="img-bg d-flex align-items-end" style="background-image: url('@item.ImagePath');">
             <div class="img-bg-inner">
                 <h2>@item.Title</h2>
-                <div class="h-25">
-                    @Html.Raw(item.Content)
+                <div class="h-25 text-white">
+                    @Html.Raw(item.Content.Substring(0, 95)) ...
                 </div>
             </div>
         </a>

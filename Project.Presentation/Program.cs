@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Project.Application.IoC;
+using Project.Application.SeedData;
 using Project.Domain.Entities;
 using Project.Infrastructure.Context;
 using Project.Presentation.Models.SeedData;
@@ -59,6 +60,14 @@ namespace Project.Presentation
 
             var app = builder.Build();
 
+            //SEEDDATA ADMÝN 
+            var serviceScope = app.Services.CreateScope();
+            AppDbContext _context = serviceScope.ServiceProvider.GetService<AppDbContext>()!;
+            UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>()!;
+            RoleManager<AppRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<AppRole>>()!;
+
+            AdminSeedData.Seed(userManager, roleManager, _context);
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -74,7 +83,7 @@ namespace Project.Presentation
             app.UseAuthentication();
             app.UseAuthorization();
 
-            DataSeeder.Seed(app);
+            //DataSeeder.Seed(app);
 
             app.UseEndpoints(endpoints =>
             {

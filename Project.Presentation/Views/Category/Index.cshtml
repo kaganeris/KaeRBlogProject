@@ -122,8 +122,8 @@
                 $("#categoryPosts").html("");
                 $("#categoryPosts").html(response);
             },
-            error: function (err) {
-                console.log(err)
+            error: function (response) {
+                console.log(response)
             }
         })
     }

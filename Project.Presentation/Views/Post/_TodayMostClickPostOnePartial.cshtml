@@ -35,7 +35,7 @@
 <h2><a asp-controller="Post" asp-action="SinglePost" asp-route-postID="@Model.PostId">@Model.Title</a></h2>
 <p class="mb-4 d-block">
     <div>
-        @Html.Raw(Model.Content)
+        @Html.Raw(Model.Content.Substring(0, 1000))
     </div>
 </p>
 

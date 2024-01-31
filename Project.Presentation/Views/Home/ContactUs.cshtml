@@ -1,0 +1,77 @@
+﻿@using Project.Application.Models.DTOs.AppUserDTOs
+
+@{
+    ViewData["Title"] = "ContactUs";
+}
+@model ContactUsDTO
+<main id="main">
+    <section id="contact" class="contact mb-5">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h1 class="page-title">Bizimle İletişime Geçin</h1>
+                </div>
+            </div>
+
+            <div class="row gy-4">
+
+                <div class="col-md-4">
+                    <div class="info-item">
+                        <i class="bi bi-geo-alt"></i>
+                        <h3>Adres</h3>
+                        <address>Merkez , AYDIN , TÜRKİYE</address>
+                    </div>
+                </div><!-- End Info Item -->
+
+                <div class="col-md-4">
+                    <div class="info-item info-item-borders">
+                        <i class="bi bi-phone"></i>
+                        <h3>Telefon Numarası</h3>
+                        <p><a href="tel:+155895548855">+90 999 999 99 99</a></p>
+                    </div>
+                </div><!-- End Info Item -->
+
+                <div class="col-md-4">
+                    <div class="info-item">
+                        <i class="bi bi-envelope"></i>
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@example.com">projemaka@gmail.com</a></p>
+                    </div>
+                </div><!-- End Info Item -->
+
+            </div>
+
+            <div class="form mt-5">
+                <form asp-action="ContactUs" asp-controller="Home" method="post" >
+                     <div class="row">
+                        <div class="form-group col-md-6">
+                    <input type="text" asp-for="Name" class="form-control form-control-lg thick" id="name" placeholder="Adınız" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                    <input type="email" class="form-control form-control-lg thick" asp-for="Email" id="email" placeholder="Emal Adresiniz" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                    <input type="text" class="form-control form-control-lg thick" asp-for="Subject" id="subject" placeholder="Konu" required>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                    <textarea class="form-control form-control-lg" asp-for="Message" rows="5" placeholder="Mesaj" required></textarea>
+                    </div>
+                    <div class="my-3">
+                        <div asp-validation-summary="All"></div>
+                    </div>
+                    <br />
+                    <div class="text-center"><button type="submit" class="btn btn-primary">Mesaj Gönder</button></div> 
+                    
+                   
+                </form>
+            </div><!-- End Contact Form -->
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
