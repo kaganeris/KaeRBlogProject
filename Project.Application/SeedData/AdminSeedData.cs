@@ -105,6 +105,16 @@ namespace Project.Application.SeedData
 
                     _context.Authors.Add(author1);
 
+                    Author adminAuthor = new Author
+                    {
+                        //Id = 1,
+                        AppUserId = user.Id,
+                        CreatedDate = DateTime.Now,
+                        Status = Domain.Enums.Status.Active,
+                    };
+
+                    _context.Authors.Add(adminAuthor);
+
                     _context.SaveChanges();
 
                     AppUser authorUser2 = new AppUser

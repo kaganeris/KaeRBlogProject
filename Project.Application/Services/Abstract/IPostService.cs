@@ -28,5 +28,8 @@ namespace Project.Application.Services.Abstract
         Task<List<PostDetailVM>> GetProfilePosts(Guid userId);
         Task<List<PostGridVM>> GetCategoryPostsByPageNumber(string categoryName,int pageNumber, Guid userId);
         Task IncreaseClickCount(int id);
+        Task<int> GetPostCount();
+
+        Task<List<PostListDTO>> GetPostList();
     }
 }

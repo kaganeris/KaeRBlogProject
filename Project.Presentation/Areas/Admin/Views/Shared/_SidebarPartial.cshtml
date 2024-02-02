@@ -1,25 +1,32 @@
 ﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="">
+                <i class="mdi mdi-keyboard-return menu-icon"></i>
+                <span class="menu-title">Siteye Dön</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="Admin">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Ana Sayfa</span>
             </a>
         </li>
         <li class="nav-item nav-category">Blog İşlemleri</li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Post İşlemleri</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Post Oluştur</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Postları Listele</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Post" asp-action="Create" asp-area="Admin">Post Oluştur</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Post" asp-action="Index" asp-area="Admin" asp-route-pageNumber="1">Postları Listele</a></li>
                 </ul>
             </div>
         </li>
+
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                 <i class="menu-icon mdi mdi-apps"></i>
@@ -28,8 +35,8 @@
             </a>
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Kategori Oluştur</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Kategorileri Listele</a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Genre" asp-action="Create" asp-area="Admin">Kategori Oluştur</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Genre" asp-action="Index" asp-area="Admin">Kategorileri Listele</a></li>
                 </ul>
             </div>
         </li>

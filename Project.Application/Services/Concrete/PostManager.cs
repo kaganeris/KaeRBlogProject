@@ -67,7 +67,7 @@ namespace Project.Application.Services.Concrete
             }
         }
 
-        public async Task<PostDetailVM> GetDetailPost(int postid,Guid userId)
+        public async Task<PostDetailVM> GetDetailPost(int postid, Guid userId)
         {
             PostDetailVM postDetailVM = await postRepository.GetFilteredFirstOrDefault(
                 select: x => new PostDetailVM
@@ -109,7 +109,7 @@ namespace Project.Application.Services.Concrete
             List<PostHeroDTO> postHeroDTOs = await postRepository.GetFilteredList(
                 select: x => new PostHeroDTO
                 {
-                    PostId= x.Id,
+                    PostId = x.Id,
                     Title = x.Title,
                     ImagePath = x.ImagePath,
                     Content = x.Content.Substring(0, 100)
@@ -133,7 +133,7 @@ namespace Project.Application.Services.Concrete
             }
         }
 
-        public async Task<PostGridVM> GetPostGridVM(string genreName,Guid userId)
+        public async Task<PostGridVM> GetPostGridVM(string genreName, Guid userId)
         {
             PostGridVM postGridVM = await postRepository.GetFilteredFirstOrDefault(
                 select: x => new PostGridVM
@@ -183,7 +183,7 @@ namespace Project.Application.Services.Concrete
                 return postGridVMList[randomIndex];
             }
 
-            return await GetRandomPost(genreName,userId);
+            return await GetRandomPost(genreName, userId);
         }
 
         public async Task<List<PostGridVM>> GetTrendingPosts()
@@ -365,7 +365,38 @@ namespace Project.Application.Services.Concrete
                include: x => x.Include(x => x.Author).Include(x => x.Author.AppUser).Include(x => x.Genre)
            );
 
-            return postGridVM.Skip((pageNumber*5)-5).Take(5).ToList();
+            return postGridVM.Skip((pageNumber * 5) - 5).Take(5).ToList();
+        }
+
+        public async Task<int> GetPostCount()
+        {
+            List<Post> post = await postRepository.GetFilteredList(select: x => new Post { Id = x.Id }, where: x => x.Status != Domain.Enums.Status.Passive);
+
+            return post.Count;
+        }
+
+        public async Task<List<PostListDTO>> GetPostList()
+        {
+            List<PostListDTO> postListDTO = await postRepository.GetFilteredList(
+               select: x => new PostListDTO
+               {
+                   PostId = x.Id,
+                   Title = x.Title,
+                   AuthorName = x.Author.AppUser.FullName,
+                   Content = x.Content,
+                   ImagePath = x.ImagePath,
+                   AuthorPhoto = x.Author.AppUser.ImagePath,
+                   GenreName = x.Genre.Name,
+                   CreatedDate = x.CreatedDate,
+                   UpdatedDate = x.UpdatedDate,
+                   DeletedDate = x.DeletedDate,
+                   Status = x.Status
+               },
+               where: x => x.Id != null,
+               include: x => x.Include(x => x.Genre).Include(x => x.Author.AppUser).Include(x => x.Author)
+           );
+
+            return postListDTO;
         }
     }
 }

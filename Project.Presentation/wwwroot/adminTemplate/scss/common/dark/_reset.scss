@@ -59,6 +59,44 @@ textarea {
     overflow-x: hidden;
 }
 
+.custom-pagination a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    font-family: var(--font-secondary);
+    margin: 5px;
+    transition: 0.3s all ease;
+}
+
+.custom-pagination a.active {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.custom-pagination a.active:hover {
+    background: rgba(var(--color-black-rgb), 0.9);
+}
+
+.custom-pagination a:hover {
+    background: rgba(var(--color-black-rgb), 0.1);
+}
+
+.custom-pagination a.prev,
+.custom-pagination a.next {
+    width: auto !important;
+    border-radius: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.custom-pagination a.prev:hover,
+.custom-pagination a.next:hover {
+    background: rgba(var(--color-black-rgb), 0.1);
+}
+
 .btn,
 .btn-group.open .dropdown-toggle,
 .btn:active,

@@ -1,0 +1,33 @@
+﻿@using Project.Application.Models.DTOs.AppUserDTOs
+
+@model UserCountDTO
+<div class="card card-rounded">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                    <div>
+                        <p class="text-small mb-2">Toplam Kullanıcı Sayısı</p>
+                        <h4 class="mb-0 fw-bold">@Model.TotalUserCount</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-small mb-2">Yazar Sayısı</p>
+                        <h4 class="mb-0 fw-bold">@Model.AuthorCount</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-small mb-2">Normal Üye Sayısı</p>
+                        <h4 class="mb-0 fw-bold">@Model.NormalUserCount</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

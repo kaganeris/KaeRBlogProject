@@ -32,7 +32,7 @@
             <p>
                 @{
                     // İçerik metninin ilk 320 karakterini almak
-                    string first30Chars = Model[0].Content.Length > 320 ? Model[0].Content.Substring(0, 320) + "..." : Model[0].Content;
+                    string first30Chars = item.Content.Length > 320 ? item.Content.Substring(0, 320) + "..." : item.Content;
                 }
 
                 @Html.Raw(first30Chars)

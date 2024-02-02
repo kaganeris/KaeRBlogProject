@@ -20,5 +20,9 @@ namespace Project.Application.Services.Abstract
         Task<string> GetUserEmail(LoginDTO loginDTO);
 
         Task UpdateUserDetail(UpdateUserDetailDTO model);
+        Task<List<UserDTO>> GetAllUsers(int pageNumber);
+
+        Task<List<UserDTO>> UserCount();
+        Task<UserDTO> GetAdminInfo();
     }
 }

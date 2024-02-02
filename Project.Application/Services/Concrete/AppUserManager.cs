@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Project.Application.Helper;
 using Project.Application.Models.DTOs.AppUserDTOs;
 using Project.Application.Models.DTOs.ConfirmMailDTOs;
@@ -176,6 +177,66 @@ namespace Project.Application.Services.Concrete
 
                await userManager.UpdateAsync(appUser);
             }
+        }
+
+        public async Task<List<UserDTO>> GetAllUsers(int pageNumber)
+        {
+            List<UserDTO> result = await appUserRepository.GetFilteredList(
+                select: x => new UserDTO
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    UserType = x.Author != null ? x.Author.Id : 0,
+                    PostCount = x.Author != null ? x.Author.Posts.Count : 0,
+                    CommentCount = x.Comments.Count,
+                    ReplyCount = x.Replies.Count,
+                    LikeCount = x.Likes.Count,
+                    ImagePath = x.ImagePath,
+                    Status = x.Status
+                },
+                where: x => x.Id != Guid.Parse("f8378454-0ead-4e72-aed0-08dc22ac26d5"),
+                include: x => x.Include(x => x.Author).Include(x => x.Author.Posts).Include(x => x.Comments).Include(x => x.Replies)
+                );
+
+            return result.Skip((pageNumber * 5) - 5).Take(5).ToList();
+        }
+
+        public async Task<List<UserDTO>> UserCount()
+        {
+            List<UserDTO> result = await appUserRepository.GetFilteredList(
+                 select: x => new UserDTO
+                 {
+                     Id = x.Id,
+                     FullName = x.FullName,
+                     UserType = x.Author != null ? x.Author.Id : 0,
+                     PostCount = x.Author != null ? x.Author.Posts.Count : 0,
+                     CommentCount = x.Comments.Count,
+                     ReplyCount = x.Replies.Count,
+                     ImagePath = x.ImagePath,
+                     Status = x.Status
+                 },
+                 where: x => x.Id != Guid.Parse("f8378454-0ead-4e72-aed0-08dc22ac26d5"),
+                 include: x => x.Include(x => x.Author).Include(x => x.Author.Posts).Include(x => x.Comments).Include(x => x.Replies)
+                 );
+
+            return result;
+        }
+
+        public async Task<UserDTO> GetAdminInfo()
+        {
+            UserDTO result = await appUserRepository.GetFilteredFirstOrDefault(
+                select: x => new UserDTO
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    Email = x.Email,
+                    ImagePath = x.ImagePath,
+                    Status = x.Status
+                },
+                where: x => x.Id == Guid.Parse("f8378454-0ead-4e72-aed0-08dc22ac26d5")
+                );
+
+            return result;
         }
     }
 }

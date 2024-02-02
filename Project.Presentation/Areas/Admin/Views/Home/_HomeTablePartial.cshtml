@@ -1,0 +1,108 @@
+﻿@using Project.Application.Models.DTOs.AppUserDTOs
+@using Project.Domain.Enums
+
+@model List<UserDTO>
+
+<div class="row flex-grow">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card card-rounded">
+            <div class="card-body">
+                <div class="table-responsive  mt-1">
+                    
+                        <table class="table select-table">
+                            <thead>
+                                <tr>
+                                    <th>Adı Soyadı</th>
+                                    <th>Üyelik Tipi</th>
+                                    <th>Post Sayısı</th>
+                                    <th>Yorum Sayısı</th>
+                                    <th>Yanıt Sayısı</th>
+                                    <th>Beğeni Sayısı</th>
+                                    <th>Kayıt Tarihi</th>
+                                    <th>Durumu</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                int userCount = 0;
+                                }
+                            @foreach (var item in Model)
+                            {
+                                userCount++;
+                                <tr>
+                                    <td>
+                                        <div class="d-flex ">
+                                            <img src="@item.ImagePath" alt="">
+                                            <div>
+                                                <h6>@item.FullName</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if(item.UserType == 0)
+                                        {
+                                            <h6>Normal Üye</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>Yazar</h6>
+                                        }
+                                    </td>
+                                    <td>
+                                        <h6>@item.PostCount</h6>
+                                    </td>
+                                    <td>
+                                        <h6>@item.CommentCount</h6>
+                                    </td>
+                                    <td>
+                                        <h6>@item.ReplyCount</h6>
+                                    </td>
+                                    <td>
+                                        <h6>@item.LikeCount</h6>
+                                    </td>
+                                    <td>
+                                        <h6>@item.CreatedDate.ToShortDateString()</h6>
+                                    </td>
+                                    <td><div class="badge badge-opacity-warning">@Enum.GetName(typeof(Status),item.Status)</div></td>
+                                    <td>
+                                        <a class="btn btn-primary m-0">Güncelle</a>
+                                        <a class="btn btn-danger m-0">Sil</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-pagination">
+        @{
+            int pageCount = 1;
+            if(pageCount == 1)
+            {
+                <a href="#" class="prev">Geri</a>
+            }
+            else
+            {
+                <a href="#" class="prev" onclick="previousPage()">Geri</a>
+            }
+        }
+        @for (int i = 1; i < ViewBag.TotalUserCount; i=i+5)
+        {
+            <a id="cat-@i" class="active">@i</a>
+        }
+        @{
+            if (userCount == ViewBag.TotalUserCount)
+            {
+                <a href="#" class="next">İleri</a>
+            }
+            else
+            {
+                <a href="#" class="next" onclick="nextPage()">İleri</a>
+            }
+        }
+        
+    </div>
+</div>
