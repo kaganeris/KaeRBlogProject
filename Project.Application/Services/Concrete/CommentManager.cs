@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Project.Application.Models.DTOs.CommentDTOs;
 using Project.Application.Services.Abstract;
 using Project.Domain.Entities;
 using Project.Domain.Repositories;
+using Project.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +54,25 @@ namespace Project.Application.Services.Concrete
                     return await commentRepository.Delete(deleteComment);
                 }
             }
+        }
+
+        public async Task<List<CommentVM>> GetAllCommentList()
+        {
+            return await commentRepository.GetFilteredList(
+               select: x => new CommentVM
+               {
+                   CommentId = x.Id,
+                   Content = x.Content,
+                   AppUserFullName = x.AppUser.FullName,
+                   AppUserImagePath = x.AppUser.ImagePath,
+                   PostTitle = x.Post.Title,
+                   CreatedDate = x.CreatedDate,
+                   UpdatedDate = x.UpdatedDate,
+                   DeletedDate = x.DeletedDate,
+                   Status = x.Status,
+               },
+               where: x => x.Id != 0, orderBy: x => x.OrderByDescending(x => x.CreatedDate),include: x => x.Include(x => x.AppUser).Include(x => x.Post)
+               );
         }
 
         public async Task<bool> UpdateComment(UpdateCommentDTO updateCommentDTO)

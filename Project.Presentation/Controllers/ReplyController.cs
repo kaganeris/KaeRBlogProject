@@ -39,6 +39,7 @@ namespace Project.Presentation.Controllers
                         AppUser appUser = await userManager.GetUserAsync(User);
                         replyDTO.AppUserFullName = appUser.FullName;
                         replyDTO.CreatedDate = DateTime.Now;
+                        replyDTO.AppUserImagePath = appUser.ImagePath;
                         return PartialView("_ReplyPartial", replyDTO);
                     }
                     else

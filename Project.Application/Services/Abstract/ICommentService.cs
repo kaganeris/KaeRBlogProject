@@ -12,5 +12,6 @@ namespace Project.Application.Services.Abstract
         Task<bool> CreateComment(CreateCommentDTO createCommentDTO);
         Task<bool> UpdateComment(UpdateCommentDTO updateCommentDTO);
         Task<bool> DeleteComment(int id);
+        Task<List<CommentVM>> GetAllCommentList();
     }
 }

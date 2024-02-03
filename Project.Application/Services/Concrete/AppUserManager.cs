@@ -108,7 +108,7 @@ namespace Project.Application.Services.Concrete
             var user = mapper.Map<AppUser>(model);
 
             AppUser user2 = await appUserRepository.GetDefault(x => x.Id == user.Id);
-           
+
 
             await appUserRepository.Update(user2);
 
@@ -163,19 +163,18 @@ namespace Project.Application.Services.Concrete
 
             if (appUser != null)
             {
-                using var image = Image.Load(model.UploadPath.OpenReadStream());
+                if (model.UploadPath != null)
+                {
+                    using var image = Image.Load(model.UploadPath.OpenReadStream());
+                    image.Mutate(x => x.Resize(300, 300));
 
-                image.Mutate(x => x.Resize(300, 300));
-
-                Guid guid = Guid.NewGuid();
-
-                image.Save($"wwwroot/images/profilePhotos/{guid}.jpg"); 
-
-                model.ImagePath = $"/images/profilePhotos/{guid}.jpg";
-
+                    Guid guid = Guid.NewGuid();
+                    image.Save($"wwwroot/images/profilePhotos/{guid}.jpg");
+                    model.ImagePath = $"/images/profilePhotos/{guid}.jpg";
+                }
                 appUser = mapper.Map(model, appUser);
 
-               await userManager.UpdateAsync(appUser);
+                await userManager.UpdateAsync(appUser);
             }
         }
 
@@ -237,6 +236,44 @@ namespace Project.Application.Services.Concrete
                 );
 
             return result;
+        }
+
+        public async Task<bool> Active(Guid Id)
+        {
+            AppUser appUser = await appUserRepository.GetDefault(x => x.Id == Id);
+            if (appUser != null)
+            {
+                appUser.Status = Domain.Enums.Status.Active;
+                appUser.UpdatedDate = DateTime.Now;
+                IdentityResult result = await userManager.UpdateAsync(appUser);
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        public async Task<bool> Passive(Guid Id)
+        {
+            AppUser appUser = await appUserRepository.GetDefault(x => x.Id == Id);
+            if (appUser != null)
+            {
+                appUser.Status = Domain.Enums.Status.Passive;
+                appUser.DeletedDate = DateTime.Now;
+                IdentityResult result = await userManager.UpdateAsync(appUser);
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
         }
     }
 }

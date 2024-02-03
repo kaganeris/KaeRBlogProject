@@ -40,6 +40,7 @@ namespace Project.Presentation.Controllers
                         AppUser appUser = await userManager.GetUserAsync(User);
                         commentDTO.AppUserFullName = appUser.FullName;
                         commentDTO.CreatedDate = DateTime.Now;
+                        commentDTO.AppUserImagePath = appUser.ImagePath;
                         return PartialView("_CommentPartial", commentDTO);
                     }
                     else

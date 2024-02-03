@@ -3,13 +3,13 @@
 @{
     ViewData["Title"] = "Create";
 }
-@model CreatePostDTO
+@model UpdatePostDTO
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Makale Oluştur</h4>
-        <form class="forms-sample" asp-action="Create" asp-controller="Post" asp-area="Admin" method="post" enctype="multipart/form-data">
+        <form class="forms-sample" asp-action="Update" asp-controller="Post" asp-area="Admin" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input asp-for="UploadPath" type="file" class="form-control" required>
+                <input asp-for="UploadPath" type="file" class="form-control">
             </div>
             <div class="form-group">
                 <input asp-for="Title" type="text" class="form-control" placeholder="Makale Başlığı" required>
@@ -18,7 +18,7 @@
                 <textarea asp-for="Content" id="summernote" class="form-control"></textarea>
             </div>
             <div class="form-group">
-                <select asp-for="GenreId" class="form-select">
+                <select asp-for="GenreID" class="form-select">
                     @foreach (var genre in Model.Genres)
                     {
                         <option value="@genre.Id">@genre.Name</option>
@@ -30,6 +30,7 @@
         </form>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>

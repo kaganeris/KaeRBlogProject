@@ -1,0 +1,21 @@
+﻿@using Project.Application.Models.DTOs.GenreDTOs
+
+@{
+    ViewData["Title"] = "Create";
+}
+@model CreateGenreDTO
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Kategori Oluştur</h4>
+        <form class="forms-sample" asp-action="Create" asp-controller="Genre" asp-area="Admin" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="form-label">Kategori Adı</label>
+                <input asp-for="Name" type="text" class="form-control" required>
+            </div>
+            <div asp-validation-summary="All" class="bg-red text-white"></div>
+            <button type="submit" class="btn btn-primary me-2">Oluştur</button>
+        </form>
+    </div>
+</div>
+

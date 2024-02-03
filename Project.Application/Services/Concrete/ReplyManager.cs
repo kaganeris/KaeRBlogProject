@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Project.Application.Models.DTOs.ReplyDTOs;
 using Project.Application.Services.Abstract;
 using Project.Domain.Entities;
@@ -53,6 +54,25 @@ namespace Project.Application.Services.Concrete
                     return await replyRepository.Delete(deleteReply);
                 }
             }
+        }
+
+        public async Task<List<ReplyVM>> GetAllReplys()
+        {
+            return await replyRepository.GetFilteredList(
+               select: x => new ReplyVM
+               {
+                   Id = x.Id,
+                   Content = x.Content,
+                   AppUserImagePath = x.AppUser.ImagePath,
+                   AppUserFullName = x.AppUser.FullName,
+                   CommentName = x.Comment.Content,
+                   CreatedDate = x.CreatedDate,
+                   UpdatedDate = x.UpdatedDate,
+                   DeletedDate = x.DeletedDate,
+                   Status = x.Status,
+               },
+               where: x => x.Id != 0, orderBy: x => x.OrderByDescending(x => x.CreatedDate),include: x => x.Include(x => x.AppUser).Include(x => x.Comment)
+               );
         }
 
         public async Task<bool> UpdateReply(UpdateReplyDTO updateReplyDTO)

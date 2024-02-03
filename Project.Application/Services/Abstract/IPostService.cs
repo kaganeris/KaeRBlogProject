@@ -16,6 +16,7 @@ namespace Project.Application.Services.Abstract
         Task<bool> CreatePost(CreatePostDTO createPostDTO);
         Task<bool> UpdatePost(UpdatePostDTO updatePostDTO);
         Task<bool> DeletePost(int id);
+        Task<bool> ActivePost(int id);
 
         Task<List<PostHeroDTO>> GetHeroPosts();
 

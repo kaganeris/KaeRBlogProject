@@ -12,6 +12,7 @@ namespace Project.Application.Models.DTOs.CommentDTOs
         public int CommentId { get; set; }
         public string Content { get; set; }
         public string AppUserFullName { get; set; }
+        public string AppUserImagePath { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<ReplyDTO> Replies { get; set; }
 

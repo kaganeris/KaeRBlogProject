@@ -18,6 +18,9 @@ namespace Project.Application.Services.Abstract
         Task UpdateUser(UpdateUserDTO model);
         Task<bool> EmailConfirm(ConfirmMailDTO confirmMailDTO);
         Task<string> GetUserEmail(LoginDTO loginDTO);
+        Task<bool> Active(Guid Id);
+        Task<bool> Passive(Guid Id);
+
 
         Task UpdateUserDetail(UpdateUserDetailDTO model);
         Task<List<UserDTO>> GetAllUsers(int pageNumber);

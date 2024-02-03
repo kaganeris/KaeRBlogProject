@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Project.Application.Models.DTOs.LikeDTOs;
 using Project.Application.Services.Abstract;
 using Project.Domain.Entities;
 using Project.Domain.Repositories;
+using Project.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +57,24 @@ namespace Project.Application.Services.Concrete
             }
         }
 
+        public async Task<List<LikeVM>> GetAllLikes()
+        {
+            return await likeRepository.GetFilteredList(
+              select: x => new LikeVM
+              {
+                  LikeId = x.Id,
+                  PostName = x.Post.Title,
+                  AppUserFullName = x.AppUser.FullName,
+                  AppUserImagePath = x.AppUser.ImagePath,
+                  CreatedDate = x.CreatedDate,
+                  UpdatedDate = x.UpdatedDate,
+                  DeletedDate = x.DeletedDate,
+                  Status = x.Status,
+              },
+              where: x => x.Id != 0, orderBy: x => x.OrderByDescending(x => x.CreatedDate), include: x => x.Include(x => x.AppUser).Include(x => x.Post)
+              );
+        }
+
         public async Task<int> GetLikeId(int postId, Guid appUserId)
         {
             bool result = await likeRepository.Any(x => x.PostId == postId && x.AppUserId == appUserId);
@@ -69,7 +89,7 @@ namespace Project.Application.Services.Concrete
 
         public async Task<bool> UpdateLike(UpdateLikeDTO updateLikeDTO)
         {
-            if(updateLikeDTO == null)
+            if (updateLikeDTO == null)
             {
                 return false;
             }

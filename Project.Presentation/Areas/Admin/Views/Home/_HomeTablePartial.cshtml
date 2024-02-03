@@ -6,6 +6,9 @@
 <div class="row flex-grow">
     <div class="col-12 grid-margin stretch-card">
         <div class="card card-rounded">
+            <div style="background-color: green; color: white; text-align: center;">@TempData["UpdateSuccess"]</div>
+            <div style="background-color: blueviolet; color: white; text-align: center;">@TempData["Active"]</div>
+            <div style="background-color: red; color: white; text-align: center;">@TempData["Delete"]</div>
             <div class="card-body">
                 <div class="table-responsive  mt-1">
                     
@@ -64,10 +67,23 @@
                                     <td>
                                         <h6>@item.CreatedDate.ToShortDateString()</h6>
                                     </td>
-                                    <td><div class="badge badge-opacity-warning">@Enum.GetName(typeof(Status),item.Status)</div></td>
+                                    @if (item.Status == Status.Active)
+                                    {
+                                        <td><label class="badge badge-success">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                                    }
+                                    else if (item.Status == Status.Modified)
+                                    {
+                                        <td><label class="badge badge-info">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                                    }
+                                    else
+                                    {
+                                        <td><label class="badge badge-danger">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                                    }
                                     <td>
-                                        <a class="btn btn-primary m-0">Güncelle</a>
-                                        <a class="btn btn-danger m-0">Sil</a>
+                                        <a class="btn btn-primary m-0" asp-action="UpdateUser" asp-controller="User" asp-route-id="@item.Id">Güncelle</a>
+                                        <a class="btn btn-success m-0" asp-action="Active" asp-controller="User" asp-route-id="@item.Id">Aktifleştir</a>
+                                        <a class="btn btn-danger m-0" asp-action="Passive" asp-controller="User" asp-route-id="@item.Id">Pasifleştir</a>
+                                        <a class="btn btn-danger m-0" asp-action="Delete" asp-controller="User" asp-route-id="@item.Id">Sil</a>
                                     </td>
                                 </tr>
                             }

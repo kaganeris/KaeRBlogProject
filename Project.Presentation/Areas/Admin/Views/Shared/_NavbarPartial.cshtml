@@ -6,10 +6,10 @@
             </button>
         </div>
         <div>
-            <a class="navbar-brand brand-logo" href="index.html">
+            <a class="navbar-brand brand-logo" asp-action="Index" asp-controller="Home" asp-area="Admin">
                 <img src="~/adminTemplate/images/logo.svg" alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="index.html">
+            <a class="navbar-brand brand-logo-mini" asp-action="Index" asp-controller="Home" asp-area="Admin">
                 <img src="~/adminTemplate/images/logo-mini.svg" alt="logo" />
             </a>
         </div>
@@ -41,7 +41,7 @@
                         <p id="profileEmail" class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
                     </div>
                     <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> Profilim 
-                    <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Çıkış Yap</a>
+                    <a class="dropdown-item" asp-action="Logout" asp-controller="User" asp-area=""><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Çıkış Yap</a>
                 </div>
             </li>
         </ul>

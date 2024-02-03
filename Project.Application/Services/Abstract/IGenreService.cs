@@ -11,11 +11,13 @@ namespace Project.Application.Services.Abstract
     public interface IGenreService
     {
         Task<List<GenreVM>> GetGenreList();
+        Task<List<GenreVM>> GetAllGenreList();
         Task<UpdateGenreDTO> GetGenreById(int id);
         Task<GenreVM> GetGenreByName(string genreName);
 
         Task<bool> CreateGenre(CreateGenreDTO createGenreDTO);
         Task<bool> UpdateGenre(UpdateGenreDTO updateGenreDTO);
         Task<bool> DeleteGenre(int id);
+        Task<bool> Active(int id);
     }
 }

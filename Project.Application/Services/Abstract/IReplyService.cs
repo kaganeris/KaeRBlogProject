@@ -12,5 +12,6 @@ namespace Project.Application.Services.Abstract
         Task<bool> CreateReply(CreateReplyDTO createReplyDTO);
         Task<bool> UpdateReply(UpdateReplyDTO updateReplyDTO);
         Task<bool> DeleteReply(int id);
+        Task<List<ReplyVM>> GetAllReplys();
     }
 }

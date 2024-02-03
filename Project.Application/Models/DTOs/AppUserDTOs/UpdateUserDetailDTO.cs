@@ -30,9 +30,9 @@ namespace Project.Application.Models.DTOs.AppUserDTOs
         public Gender Gender { get; set; }
         public string? ImagePath { get; set; }
 
-        public string About { get; set; }
+        public string? About { get; set; }
 
         [PictureFileExtension]
-        public IFormFile UploadPath { get; set; }
+        public IFormFile? UploadPath { get; set; }
     }
 }

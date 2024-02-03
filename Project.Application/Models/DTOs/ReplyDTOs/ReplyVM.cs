@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Application.Models.VMs.GenreVMs
+namespace Project.Application.Models.DTOs.ReplyDTOs
 {
-    public class GenreVM
+    public class ReplyVM
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Content { get; set; }
+        public string AppUserImagePath { get; set; }
+        public string AppUserFullName { get; set; }
+        public string CommentName { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }

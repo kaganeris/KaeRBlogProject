@@ -87,6 +87,7 @@ namespace Project.Application.Services.Concrete
                         CommentId = x.Id,
                         Content = x.Content,
                         AppUserFullName = x.AppUser.FullName,
+                        AppUserImagePath = x.AppUser.ImagePath,
                         CreatedDate = x.CreatedDate,
                         Replies = x.Replies.Select(x => new ReplyDTO
                         {
@@ -392,11 +393,31 @@ namespace Project.Application.Services.Concrete
                    DeletedDate = x.DeletedDate,
                    Status = x.Status
                },
-               where: x => x.Id != null,
+               where: x => x.Id != 0,
+               orderBy: x => x.OrderByDescending(x => x.CreatedDate),
                include: x => x.Include(x => x.Genre).Include(x => x.Author.AppUser).Include(x => x.Author)
            );
 
             return postListDTO;
+        }
+
+        public async Task<bool> ActivePost(int id)
+        {
+
+            if (id <= 0)
+                return false;
+            else
+            {
+                Post post = await postRepository.GetDefault(x => x.Id == id);
+                if (post == null)
+                    return false;
+                else
+                {
+                    post.Status = Domain.Enums.Status.Active;
+                    await postRepository.Update(post);
+                    return true;
+                }
+            }
         }
     }
 }

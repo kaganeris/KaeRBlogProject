@@ -6,12 +6,15 @@
 }
 @model List<PostListDTO>
 
+
 <div class="row flex-grow">
     <div class="col-12 grid-margin stretch-card">
         <div class="card card-rounded">
+            <div style="background-color: green; color: white; text-align: center;">@TempData["UpdateSuccess"]</div>
+            <div style="background-color: blueviolet; color: white; text-align: center;">@TempData["Active"]</div>
+            <div style="background-color: red; color: white; text-align: center;">@TempData["Delete"]</div>
             <div class="card-body">
                 <div class="table-responsive  mt-1">
-
                     <table class="table select-table">
                         <thead>
                             <tr>
@@ -24,7 +27,7 @@
                                 <th>Oluşturma Tarihi</th>
                                 <th>Durumu</th>
                                 <th>İşlemler</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -36,7 +39,7 @@
                                 postCount++;
                                 <tr>
                                     <td>
-                                       <h6>@item.PostId</h6>
+                                        <h6>@item.PostId</h6>
                                     </td>
                                     <td>
                                         <div class="d-flex ">
@@ -50,7 +53,7 @@
                                         <h6>@item.Title</h6>
                                     </td>
                                     <td>
-                                        <h6>@item.Content.Substring(0,30)...</h6>
+                                        <h6>@item.Content.Substring(0, 30)...</h6>
                                     </td>
                                     <td>
                                         <img src="@item.ImagePath" alt="">
@@ -61,10 +64,22 @@
                                     <td>
                                         <h6>@item.CreatedDate.ToShortDateString()</h6>
                                     </td>
-                                    <td><div class="badge badge-opacity-warning">@Enum.GetName(typeof(Status), item.Status)</div></td>
+                                    @if (item.Status == Status.Active)
+                                    {
+                                        <td><label class="badge badge-success">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                                    }
+                                    else if (item.Status == Status.Modified)
+                                    {
+                                        <td><label class="badge badge-info">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                                    }
+                                    else
+                                    {
+                                        <td><label class="badge badge-danger">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                                    }
                                     <td>
-                                        <a class="btn btn-primary m-0">Güncelle</a>
-                                        <a class="btn btn-danger m-0">Sil</a>
+                                        <a class="btn btn-primary m-0" asp-action="Update" asp-controller="Post" asp-area="Admin" asp-route-id="@item.PostId">Güncelle</a>
+                                        <a class="btn btn-success m-0" asp-action="Active" asp-controller="Post" asp-area="Admin" asp-route-id="@item.PostId">Aktifleştir</a>
+                                        <a class="btn btn-danger m-0" asp-action="Delete" asp-controller="Post" asp-area="Admin" asp-route-id="@item.PostId">Pasifleştir</a>
                                     </td>
                                 </tr>
                             }
@@ -108,6 +123,9 @@
 
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <style type="text/css">
     .custom-pagination a {
         display: inline-block;
@@ -120,7 +138,7 @@
         margin: 5px;
         transition: 0.3s all ease;
         text-decoration: none;
-        color:black;
+        color: black;
     }
 
         .custom-pagination a.active {

@@ -32,11 +32,11 @@ namespace Project.Presentation
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = "/Home/AccesDenied";
+                options.AccessDeniedPath = "/Home/AccessDenied";
 
-                options.LogoutPath = "/Login/Logout";
+                options.LogoutPath = "/User/Logout";
 
-                options.LoginPath = "/Login/Index";
+                options.LoginPath = "/User/Login";
 
 
             });

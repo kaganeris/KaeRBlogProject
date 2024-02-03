@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Application.Models.VMs.GenreVMs
+namespace Project.Application.Models.DTOs.LikeDTOs
 {
-    public class GenreVM
+    public class LikeVM
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int LikeId { get; set; }
+        public string PostName { get; set; }
+        public string AppUserFullName { get; set; }
+        public string AppUserImagePath { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }

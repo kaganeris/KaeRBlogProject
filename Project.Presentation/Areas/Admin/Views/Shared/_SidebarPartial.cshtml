@@ -36,7 +36,7 @@
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" asp-controller="Genre" asp-action="Create" asp-area="Admin">Kategori Oluştur</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Genre" asp-action="Index" asp-area="Admin">Kategorileri Listele</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Genre" asp-action="Index" asp-area="Admin" asp-route-pageNumber="1">Kategorileri Listele</a></li>
                 </ul>
             </div>
         </li>
@@ -48,7 +48,7 @@
             </a>
             <div class="collapse" id="tables">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Yorumları Listele</a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Comment" asp-action="Index" asp-area="Admin" asp-route-pageNumber="1">Yorumları Listele</a></li>
                 </ul>
             </div>
         </li>
@@ -60,7 +60,7 @@
             </a>
             <div class="collapse" id="yanit">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Yanıtları Listele</a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Reply" asp-action="Index" asp-area="Admin" asp-route-pageNumber="1">Yanıtları Listele</a></li>
                 </ul>
             </div>
         </li>
@@ -72,38 +72,7 @@
             </a>
             <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Beğenileri Listele</a></li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item nav-category">Kullanıcı İşlemleri</li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon mdi mdi-account-circle-outline"></i>
-                <span class="menu-title">Üye İşlemleri</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Üye Oluştur </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Üyeleri Listele </a></li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#yazar" aria-expanded="false" aria-controls="yazar">
-                <i class="menu-icon mdi mdi-account-circle-outline"></i>
-                <span class="menu-title">Yazar İşlemleri</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="yazar">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/samples/login.html">Yazar Oluştur</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/samples/login.html">Yazarları Listele</a>
-                    </li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Like" asp-action="Index" asp-area="Admin" asp-route-pageNumber="1">Beğenileri Listele</a></li>
                 </ul>
             </div>
         </li>

@@ -1,0 +1,124 @@
+﻿@using Project.Application.Models.DTOs.CommentDTOs
+@using Project.Domain.Enums
+
+@{
+    ViewData["Title"] = "Index";
+}
+@model List<CommentVM>
+
+<div class="card">
+    <div style="background-color: red; color: white; text-align: center;">@TempData["Delete"]</div>
+    <div class="card-body">
+        <h4 class="card-title">Yorumlar</h4>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Yorum Yapan</th>
+                        <th>Yorum</th>
+                        <th>Yorum Yapılan Post</th>
+                        <th>Oluşturma Zamanı</th>
+                        <th>Güncelleme Zamanı</th>
+                        <th>Silinme Zamanı</th>
+                        <th>Durumu</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CommentId</td>
+                            <td>
+                                <img src="@item.AppUserImagePath" />
+                                @item.AppUserFullName</td>
+                            <td>@(item.Content.Length > 30 ? item.Content.Substring(0, 30) + "..." : item.Content)</td>
+                            <td>@item.PostTitle</td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@(item.UpdatedDate == null ? "-" : Convert.ToDateTime(item.UpdatedDate).ToShortDateString())</td>
+                            <td>@(item.DeletedDate == null ? "-" : Convert.ToDateTime(item.DeletedDate).ToShortDateString())</td>
+                            @if (item.Status == Status.Active)
+                            {
+                                <td><label class="badge badge-success">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                            }
+                            else if (item.Status == Status.Modified)
+                            {
+                                <td><label class="badge badge-info">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                            }
+                            else
+                            {
+                                <td><label class="badge badge-danger">@Enum.GetName(typeof(Status), item.Status)</label></td>
+                            }
+                            <td>
+                                <a class="btn btn-danger" asp-action="Delete" asp-controller="Comment" asp-route-id="@item.CommentId">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="custom-pagination">
+    @{
+        int pageCount2 = (ViewBag.TotalCommentCount + 9) / 10;
+    }
+
+    @for (int i = 1; i <= pageCount2; i++)
+    {
+        <a asp-action="Index" asp-controller="Comment" asp-area="Admin" asp-route-pageNumber="@i" class="active">@i</a>
+    }
+
+</div>
+
+<style type="text/css">
+    .custom-pagination a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        font-family: 'Segoe UI';
+        margin: 5px;
+        transition: 0.3s all ease;
+        text-decoration: none;
+        color: black;
+    }
+
+        .custom-pagination a.active {
+            background-color: black;
+            text-decoration: none;
+            color: white;
+        }
+
+            .custom-pagination a.active:hover {
+                background-color: gray;
+                cursor: pointer;
+            }
+
+        .custom-pagination a:hover {
+            background-color: gray;
+            cursor: pointer;
+        }
+
+        .custom-pagination a.prev,
+        .custom-pagination a.next {
+            width: auto !important;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+            .custom-pagination a.prev:hover,
+            .custom-pagination a.next:hover {
+                background-color: dimgray;
+            }
+</style>
+

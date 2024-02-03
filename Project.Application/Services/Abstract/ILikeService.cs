@@ -14,5 +14,7 @@ namespace Project.Application.Services.Abstract
         Task<bool> DeleteLike(int id);
 
         Task<int> GetLikeId(int postId, Guid appUserId);
+
+        Task<List<LikeVM>> GetAllLikes();
     }
 }

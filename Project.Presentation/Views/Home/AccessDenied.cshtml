@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Erişim Engellendi</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="~/css/accessdenied.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="scene">
+        <div class="overlay"></div>
+        <div class="overlay"></div>
+        <div class="overlay"></div>
+        <div class="overlay"></div>
+        <span class="bg-403">403</span>
+        <div class="text">
+            <span class="hero-text"></span>
+            <span class="msg">Erişim Engellendi!</span>
+            <span class="msg">seni <span>içeriye</span> alamam.</span>
+            <span class="support">
+                <span>Geri Dönmek için Tıklayınız</span>
+                <a asp-controller="Home" asp-action="Index" asp-area="">Geri Dön</a>
+            </span>
+        </div>
+        <div class="lock"></div>
+    </div>
+</body>
+</html>
+
+
+

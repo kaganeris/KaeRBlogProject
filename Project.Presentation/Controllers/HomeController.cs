@@ -23,6 +23,12 @@ namespace Project.Presentation.Controllers
         }
 
         [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult AboutUs()
         {
             return View();

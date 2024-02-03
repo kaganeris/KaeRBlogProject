@@ -4,6 +4,7 @@ using Project.Application.Models.VMs.GenreVMs;
 using Project.Application.Services.Abstract;
 using Project.Domain.Entities;
 using Project.Domain.Repositories;
+using Project.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +93,23 @@ namespace Project.Application.Services.Concrete
                     Id = x.Id,
                     Name = x.Name,
                 },
-                where: x => x.Status == Domain.Enums.Status.Active
+                where: x => x.Status != Domain.Enums.Status.Passive
+                );
+        }
+
+        public async Task<List<GenreVM>> GetAllGenreList()
+        {
+            return await genreRepository.GetFilteredList(
+                select: x => new GenreVM
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CreatedDate = x.CreatedDate,
+                    UpdatedDate = x.UpdatedDate,
+                    DeletedDate = x.DeletedDate,
+                    Status = x.Status,
+                },
+                where: x => x.Id != 0
                 );
         }
 
@@ -104,6 +121,24 @@ namespace Project.Application.Services.Concrete
                 Genre genre = await genreRepository.GetDefault(x => x.Id == updateGenreDTO.Id);
                 genre = mapper.Map(updateGenreDTO, genre);
                 return await genreRepository.Update(genre);
+            }
+        }
+
+        public async Task<bool> Active(int id)
+        {
+            if (id <= 0)
+                return false;
+            else
+            {
+                Genre genre = await genreRepository.GetDefault(x => x.Id == id);
+                if (genre == null)
+                    return false;
+                else
+                {
+                    genre.Status = Domain.Enums.Status.Active;
+                    await genreRepository.Update(genre);
+                    return true;
+                }
             }
         }
     }
