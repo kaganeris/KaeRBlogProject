@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Project.Application.IoC;
 using Project.Application.SeedData;
+using Project.Application.Validations;
 using Project.Domain.Entities;
 using Project.Infrastructure.Context;
 using Project.Presentation.Models.SeedData;
@@ -28,7 +29,7 @@ namespace Project.Presentation
                 builder.RegisterModule(new DependencyResolver()); // Kendi oluþturduðumuz Resolver Class'ýn instance'ýný alýyoruz.
             });
 
-            builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddIdentity<AppUser, AppRole>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider).AddEntityFrameworkStores<AppDbContext>().AddErrorDescriber<CustomIdentityValidator>();
 
             builder.Services.ConfigureApplicationCookie(options =>
             {

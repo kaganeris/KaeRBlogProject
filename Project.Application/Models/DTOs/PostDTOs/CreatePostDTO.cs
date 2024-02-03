@@ -22,6 +22,7 @@ namespace Project.Application.Models.DTOs.PostDTOs
         public string? ImagePath { get; set; }
 
         [PictureFileExtension]
+        [Required(ErrorMessage = "Fotoğraf boş geçilemez!")]
         public IFormFile UploadPath { get; set; }
         public int? AuthorId { get; set; }
         [Required(ErrorMessage = "Kategori seçmelisiniz!")]

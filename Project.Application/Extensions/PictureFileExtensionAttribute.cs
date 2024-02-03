@@ -25,7 +25,7 @@ namespace Project.Application.Extensions
 
                 if (!result)
                 {
-                    return new ValidationResult("Valid format is 'jpg','png','jpeg'");
+                    return new ValidationResult("Fotoğraf için kabul edilen formatlar 'jpg','png','jpeg'dir.");
                 }
             }
             return ValidationResult.Success; // Validasyon başarılı

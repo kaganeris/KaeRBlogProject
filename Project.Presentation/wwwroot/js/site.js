@@ -272,6 +272,10 @@ function CreateComment(postId) {
         type: "POST",
         data: commentData,
         success: function (response) {
+            if (response.error) {
+                window.location.href = "/Profile/UpdateUser/" + response.userID;
+                return;
+            }
             $('#comments').append(response);
             $('#content').val("")
         }
@@ -288,6 +292,10 @@ function CreateReply(commentId) {
         type: "POST",
         data: commentData,
         success: function (response) {
+            if (response.error) {
+                window.location.href = "/Profile/UpdateUser/" + response.userID;
+                return;
+            }
             $(`#replies-${commentId}`).append(response);
             $(`#replyContent-${commentId}`).val("")
         }

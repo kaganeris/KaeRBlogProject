@@ -31,6 +31,14 @@ namespace Project.Presentation.Controllers
                 {
                     string userID = userIDClaim.Value;
                     createReplyDTO.AppUserId = Guid.Parse(userID);
+                    AppUser user = await userManager.GetUserAsync(User);
+                    if (user.FirstName == null)
+                    {
+                        ReplyErrorDTO replyErrorDTO = new ReplyErrorDTO();
+                        replyErrorDTO.Error = "Error";
+                        replyErrorDTO.userID = user.Id;
+                        return Json(replyErrorDTO);
+                    }
                     bool result = await replyService.CreateReply(createReplyDTO);
                     if (result)
                     {

@@ -30,9 +30,11 @@ namespace Project.Application.Models.DTOs.AppUserDTOs
         public Gender Gender { get; set; }
         public string? ImagePath { get; set; }
 
+        [Required(ErrorMessage = "Hakkımda boş geçilemez!")]
         public string? About { get; set; }
 
         [PictureFileExtension]
+        [Required(ErrorMessage = "Fotoğraf seçilmelidir!")]
         public IFormFile? UploadPath { get; set; }
     }
 }

@@ -31,6 +31,14 @@ namespace Project.Presentation.Controllers
                 else
                 {
                     string userID = userIDClaim.Value;
+                    AppUser user = await userManager.GetUserAsync(User);
+                    if (user.FirstName == null)
+                    {
+                        CommentErrorDto commentErrorDto = new CommentErrorDto();
+                        commentErrorDto.Error = "Error";
+                        commentErrorDto.userID = user.Id;
+                        return Json(commentErrorDto);
+                    }
                     createCommentDTO.AppUserId = Guid.Parse(userID);
                     bool result = await commentService.CreateComment(createCommentDTO);
                     if (result)

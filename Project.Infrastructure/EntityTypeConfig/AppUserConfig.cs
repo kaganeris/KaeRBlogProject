@@ -15,6 +15,7 @@ namespace Project.Infrastructure.EntityTypeConfig
             builder.HasKey(x => x.Id);
             builder.Property(x => x.UserName).IsRequired(true);
             builder.Property(x => x.Email).IsRequired(true);
+            builder.Property(x => x.About).IsRequired(false);
             builder.Property(x => x.ImagePath).IsRequired(false).HasMaxLength(250);
             base.Configure(builder);
         }
